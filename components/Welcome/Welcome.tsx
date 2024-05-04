@@ -3,7 +3,7 @@ import classes from './Welcome.module.css';
 
 export function Welcome() {
   return (
-    <div className="h-[100vh]">
+    <div className="h-[2000px] bg-slate-500">
       <Title className={classes.title} ta="center" mt={100}>
         Welcome to{' '}
         <Text inherit variant="gradient" component="span" gradient={{ from: 'pink', to: 'yellow' }}>
