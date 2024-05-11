@@ -1,6 +1,6 @@
 import { Room } from "./room";
 import { User } from "./user";
-import { PopulatedWith, RedefineKeyTypes } from "./util";
+import { PopulatedWith, RedefineKeyTypes } from "./Util";
 
 export interface Hostel {
     _id: string;
