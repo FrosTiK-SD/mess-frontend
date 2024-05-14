@@ -49,16 +49,16 @@ export const studentTableColumns: Array<MRT_ColumnDef<User>> = [
   {
     accessorFn: (user) => user.allocatedHostel || "N/A",
     id: "allocatedHostel",
-    header: "Allocated Hostel",
+    header: "Hostel",
   },
   {
     accessorFn: (user) => user.allocatedMess || "N/A",
     id: "allocatedMess",
-    header: "Allocated Mess",
+    header: "Mess",
   },
   {
     accessorFn: (user) => user.allocatedRoom || "N/A",
     id: "allocatedRoom",
-    header: "Allocated Room",
+    header: "Room",
   },
 ];

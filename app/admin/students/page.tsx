@@ -70,6 +70,8 @@ export default function AssignHostel() {
         <div>
           <StudentFilter filter={filter} setFilter={setFilter} />
           <Button
+            color="grape"
+            className="mt-8"
             onClick={() => {
               setShowFilter(false);
             }}
@@ -80,6 +82,13 @@ export default function AssignHostel() {
       )}
       {!showFilter && (
         <div>
+          <Button
+            color="grape"
+            className="mb-4"
+            onClick={() => setShowFilter(true)}
+          >
+            Back to Filters
+          </Button>
           <StudentTable
             students={students}
             selectionState={studentSelection}

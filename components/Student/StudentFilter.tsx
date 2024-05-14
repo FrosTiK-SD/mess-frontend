@@ -13,8 +13,9 @@ export interface StudentFilterProps {
 }
 export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
   return (
-    <div>
+    <div className="flex flex-col">
       <YearPickerInput
+        color="grape"
         label="Start Year"
         type="multiple"
         placeholder="Pick Start Year"
@@ -27,6 +28,7 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
         }
       />
       <YearPickerInput
+        color="grape"
         label="End Year"
         type="multiple"
         placeholder="Pick End Year"
@@ -38,7 +40,7 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
           }))
         }
       />
-      <div>
+      <div className="mt-4">
         Department
         <Chip.Group
           multiple
@@ -50,14 +52,21 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
             }))
           }
         >
-          {Object.values(Department).map((department) => (
-            <Chip key={department} value={department}>
-              {department}
-            </Chip>
-          ))}
+          <div className="flex flex-row">
+            {Object.values(Department).map((department) => (
+              <Chip
+                color="grape"
+                className="m-1"
+                key={department}
+                value={department}
+              >
+                {department}
+              </Chip>
+            ))}
+          </div>
         </Chip.Group>
       </div>
-      <div>
+      <div className="mt-4">
         Courses
         <Chip.Group
           multiple
@@ -69,15 +78,18 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
             }))
           }
         >
-          {Object.values(Course).map((course) => (
-            <Chip key={course} value={course}>
-              {course}
-            </Chip>
-          ))}
+          <div className="mt-1 flex flex-row">
+            {Object.values(Course).map((course) => (
+              <Chip color="grape" className="m-1" key={course} value={course}>
+                {course}
+              </Chip>
+            ))}
+          </div>
         </Chip.Group>
         <TagsInput
           label="Roll Nos"
           placeholder="Press Enter to add a Roll No"
+          className="mt-4"
         />
       </div>
     </div>

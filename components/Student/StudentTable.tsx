@@ -39,7 +39,7 @@ export function StudentTable({
     },
     renderTopToolbarCustomActions({ table }) {
       return (
-        <div className="flex flex-row">
+        <div className="flex flex-row space-x-1">
           <Button onClick={openHostalModal} color="yellow">
             Assign Hostel
           </Button>
