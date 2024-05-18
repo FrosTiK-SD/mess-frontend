@@ -49,7 +49,7 @@ export function Navbar() {
   );
   return (
     <nav
-      className={`hidden  w-[rem(80px)] flex-col border-r border-solid border-[light-dark(var(--mantine-color-gray-3),var(--mantine-color-dark-4))] p-1 md:flex`}
+      className={`flex w-[rem(80px)] flex-col border-r border-solid border-[light-dark(var(--mantine-color-gray-3),var(--mantine-color-dark-4))] p-1`}
     >
       <Center>
         <IconQuestionMark size={30} />

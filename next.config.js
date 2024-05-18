@@ -9,7 +9,7 @@ const withPWA = withPWAInit({
 });
 
 const generateAppDirEntry = (entry) => {
-  const packagePath = require.resolve('next-pwa');
+  const packagePath = require.resolve("next-pwa");
   const packageDirectory = path.dirname(packagePath);
   const registerJs = path.join(packageDirectory, "register.js");
 
@@ -29,17 +29,25 @@ const generateAppDirEntry = (entry) => {
 /** @type {import('next').NextConfig} */
 let nextConfig = {
   reactStrictMode: true,
-//   webpack: (config) => {
-//     const entry = generateAppDirEntry(config.entry);
-//     config.entry = () => entry;
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "www.iitbhu.ac.in",
+      },
+    ],
+  },
+  //   webpack: (config) => {
+  //     const entry = generateAppDirEntry(config.entry);
+  //     config.entry = () => entry;
 
-//     return config;
-//   },
+  //     return config;
+  //   },
 };
 
 // PWA fails in next dev server
-if (process.env.NODE_ENV=='production'){
-    nextConfig.webpack=(config) => {
+if (process.env.NODE_ENV == "production") {
+  nextConfig.webpack = (config) => {
     const entry = generateAppDirEntry(config.entry);
     config.entry = () => entry;
 
