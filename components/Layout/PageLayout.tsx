@@ -8,6 +8,9 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { Typography } from "../components";
+import { Navbar } from "./Navbar";
+
+import classes from "./PageLayout.module.css";
 
 // load ThemeToggle without SSR due to hydration error
 const ThemeToggle = dynamic(() => import("../Theme/ThemeToggle"), {
@@ -22,12 +25,12 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
       <AppShell
         header={{ height: 60 }}
         navbar={{
-          width: 300,
+          width: 250,
           breakpoint: "sm",
           collapsed: { mobile: !navbarOpened },
         }}
       >
-        <AppShell.Header>
+        <AppShell.Header className={classes.topNav}>
           <div className="flex h-full flex-row justify-between px-4 py-2">
             <div className="flex flex-row">
               <Burger
@@ -49,8 +52,8 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
             <ThemeToggle />
           </div>
         </AppShell.Header>
-        <AppShell.Navbar p="md" className="w-[300px]">
-          <AppShell.Section>Header</AppShell.Section>
+        <AppShell.Navbar p="md" className={classes.navbar}>
+          <Navbar />
         </AppShell.Navbar>
         <AppShell.Main>{children}</AppShell.Main>
       </AppShell>

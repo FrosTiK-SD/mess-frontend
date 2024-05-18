@@ -1,64 +1,57 @@
 "use client";
 
 import { navbarSchema } from "@/config/Navbar";
-import { Center, Tooltip, UnstyledButton, rem } from "@mantine/core";
-import { Icon123, IconQuestionMark } from "@tabler/icons-react";
-import { usePathname, useRouter } from "next/navigation";
-
-export interface NavbarElementSchema {
-  icon: typeof Icon123;
-  label: string;
-  path: string;
-}
-
-type NavbarElementProps = NavbarElementSchema & {
-  active: boolean;
-  onClick: () => void;
-};
-function NavbarElement({
-  active,
-  icon: Icon,
-  label,
-  onClick,
-}: NavbarElementProps) {
-  return (
-    <Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
-      <UnstyledButton
-        className="flex h-[rem(50px)] w-[rem(50px)] items-center justify-center rounded-[var(--mantine-radius-md)] text-[light-dark(var(--mantine-color-gray-7),var(--mantine-color-dark-0))] hover:bg-[light-dark(var(--mantine-color-gray-0),var(--mantine-color-dark-5))] data-[active]:bg-[var(--mantine-color-grape-light)] data-[active]:text-[var(--mantine-color-grape-light-color)] data-[active]:hover:bg-[var(--mantine-color-grape-light)]"
-        data-active={active || undefined}
-        onClick={onClick}
-      >
-        <Icon style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
-      </UnstyledButton>
-    </Tooltip>
-  );
-}
+import { ASSETS } from "@/constants/assets";
+import {
+  AppShell,
+  Avatar,
+  ScrollArea,
+  Text,
+  ThemeIcon,
+  UnstyledButton,
+} from "@mantine/core";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import classes from "./Navbar.module.css";
 
 export function Navbar() {
-  const currentPath = usePathname();
   const router = useRouter();
-  const elements: Array<React.ReactNode> = navbarSchema.map(
-    (element, index) => (
-      <NavbarElement
-        key={element.path}
-        {...element}
-        active={element.path === currentPath}
-        onClick={() => router.push(element.path)}
-      />
-    ),
-  );
+  const image = "";
   return (
-    <nav
-      className={`flex w-[rem(80px)] flex-col border-r border-solid border-[light-dark(var(--mantine-color-gray-3),var(--mantine-color-dark-4))] p-1`}
-    >
-      <Center>
-        <IconQuestionMark size={30} />
-      </Center>
-      <div>
-        <div className="mt-[rem(50px)] flex grow flex-col items-center justify-center">
-          {elements}
-        </div>
-      </div>
-    </nav>
+    <>
+      <AppShell.Section grow component={ScrollArea}>
+        {navbarSchema.map(({ icon: Icon, label, path }) => (
+          <div key={path} className={classes.navElement}>
+            <Link
+              className="flex h-full w-full flex-row items-center space-x-2 px-2 py-2"
+              href={path}
+            >
+              <ThemeIcon variant="light" size={30}>
+                <Icon />
+              </ThemeIcon>
+              <Text>{label}</Text>
+            </Link>
+          </div>
+        ))}
+      </AppShell.Section>
+      <AppShell.Section className={classes.bottomSection}>
+        <UnstyledButton
+          className={classes.userButton}
+          onClick={() => router.push("/user/profile")}
+        >
+          <div className="flex flex-row justify-center">
+            <div className="flex flex-row">
+              <Avatar src={image || ASSETS.iitbhu_logo} radius="xl" />
+              <div className="grow">
+                <Text size="sm">User Name</Text>
+                <Text c="dimmed" size="xs">
+                  example.name@gmail.com
+                </Text>
+              </div>
+            </div>
+          </div>
+        </UnstyledButton>
+      </AppShell.Section>
+    </>
   );
 }
