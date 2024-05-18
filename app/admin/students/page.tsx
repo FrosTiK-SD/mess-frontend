@@ -5,7 +5,7 @@ import { StudentTable } from "@/components/Student/StudentTable";
 import { Course } from "@/constants/courses";
 import { Department } from "@/constants/departments";
 import { defaultFilter } from "@/constants/user";
-import { DeepReadonly } from "@/types/Util";
+import { DeepReadonly } from "@/types/util";
 import { User, UserFilter } from "@/types/user";
 import { Button } from "@mantine/core";
 import { useState } from "react";

@@ -1,4 +1,4 @@
-import { DeepReadonlyArray } from "@/types/Util";
+import { DeepReadonlyArray } from "@/types/util";
 import { User } from "@/types/user";
 import dayjs from "dayjs";
 

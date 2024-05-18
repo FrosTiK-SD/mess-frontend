@@ -1,6 +1,6 @@
 import { Course } from "@/constants/courses";
 import { Department } from "@/constants/departments";
-import { DeepReadonly } from "@/types/Util";
+import { DeepReadonly } from "@/types/util";
 import { UserFilter } from "@/types/user";
 import { DateToYear, YearToDate } from "@/utils/student";
 import { Chip, TagsInput } from "@mantine/core";
