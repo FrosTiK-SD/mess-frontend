@@ -54,7 +54,7 @@ function Page() {
   });
 
   return (
-    <div className="h-full w-full px-4 md:px-2">
+    <div className="m-5 h-full px-4 md:m-10 md:px-2">
       <Typography variant="h2">Mess Manager</Typography>
       <Typography variant="h6">
         Find the details of all the alloted messes in one place
