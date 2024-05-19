@@ -1,4 +1,4 @@
-import { NavbarElementSchema } from "@/components/Layout/Navbar";
+import { NavbarElementSchema } from "@/types/navbar";
 import { IconBuildingSkyscraper, IconSchool } from "@tabler/icons-react";
 
 export const navbarSchema: Array<NavbarElementSchema> = [
