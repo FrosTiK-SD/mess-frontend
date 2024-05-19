@@ -10,6 +10,7 @@ import {
   ThemeIcon,
   UnstyledButton,
 } from "@mantine/core";
+import { IconChevronRight } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import classes from "./Navbar.module.css";
@@ -39,8 +40,8 @@ export function Navbar() {
           className={classes.userButton}
           onClick={() => router.push("/user/profile")}
         >
-          <div className="flex flex-row justify-center">
-            <div className="flex flex-row">
+          <div className="flex flex-row items-center justify-center space-x-2">
+            <div className="flex flex-row space-x-2">
               <Avatar src={image || ASSETS.iitbhu_logo} radius="xl" />
               <div className="grow">
                 <Text size="sm">User Name</Text>
@@ -49,6 +50,7 @@ export function Navbar() {
                 </Text>
               </div>
             </div>
+            <IconChevronRight />
           </div>
         </UnstyledButton>
       </AppShell.Section>

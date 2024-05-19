@@ -46,7 +46,7 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
                   width={40}
                   height={40}
                 />
-                <Typography>IIT BHU</Typography>
+                <Typography variant="h3">IIT BHU</Typography>
               </Link>
             </div>
             <ThemeToggle />
