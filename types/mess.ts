@@ -14,7 +14,9 @@ export type MessPopulated = RedefineKeyTypes<
   Mess,
   {
     hostel: Pick<Hostel, "_id" | "name">;
-    users: Array<Pick<User, "_id" | "email" | "firstName" | "lastName">>;
+    users: Array<
+      Pick<User, "_id" | "email" | "firstName" | "lastName" | "rollNo">
+    >;
   }
 >;
 
