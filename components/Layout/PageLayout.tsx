@@ -10,17 +10,16 @@ import Link from "next/link";
 import { Typography } from "../components";
 import { Navbar } from "./Navbar";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AuthWrapper } from "../Provider/AuthWrapper";
+
+import ReduxProvider from "../Provider/Redux";
 import classes from "./PageLayout.module.css";
 
 // load ThemeToggle without SSR due to hydration error
 const ThemeToggle = dynamic(() => import("../Theme/ThemeToggle"), {
   ssr: false,
 });
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 
@@ -28,44 +27,51 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
   const [navbarOpened, { toggle: toggleNavbar }] = useDisclosure();
 
   return (
-    <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <AppShell
-          header={{ height: 60 }}
-          navbar={{
-            width: 250,
-            breakpoint: "sm",
-            collapsed: { mobile: !navbarOpened },
-          }}
-        >
-          <AppShell.Header className={classes.topNav}>
-            <div className="flex h-full flex-row justify-between px-4 py-2">
-              <div className="flex flex-row">
-                <Burger
-                  opened={navbarOpened}
-                  onClick={toggleNavbar}
-                  hiddenFrom="sm"
-                  size="md"
-                />
-                <Link href="/" className="flex flex-row items-center space-x-2">
-                  <Image
-                    src={ASSETS.iitbhu_logo}
-                    alt="IIT BHU LOGO"
-                    width={40}
-                    height={40}
-                  />
-                  <Typography variant="h3">IIT BHU</Typography>
-                </Link>
-              </div>
-              <ThemeToggle />
-            </div>
-          </AppShell.Header>
-          <AppShell.Navbar p="md" className={classes.navbar}>
-            <Navbar />
-          </AppShell.Navbar>
-          <AppShell.Main>{children}</AppShell.Main>
-        </AppShell>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <ReduxProvider>
+      <ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <AuthWrapper>
+            <AppShell
+              header={{ height: 60 }}
+              navbar={{
+                width: 250,
+                breakpoint: "sm",
+                collapsed: { mobile: !navbarOpened },
+              }}
+            >
+              <AppShell.Header className={classes.topNav}>
+                <div className="flex h-full flex-row items-center justify-between px-4 py-2">
+                  <div className="flex flex-row items-center">
+                    <Burger
+                      opened={navbarOpened}
+                      onClick={toggleNavbar}
+                      hiddenFrom="sm"
+                      size="md"
+                    />
+                    <Link
+                      href="/"
+                      className="flex flex-row items-center space-x-2"
+                    >
+                      <Image
+                        src={ASSETS.iitbhu_logo}
+                        alt="IIT BHU LOGO"
+                        width={40}
+                        height={40}
+                      />
+                      <Typography variant="h3">IIT BHU</Typography>
+                    </Link>
+                  </div>
+                  <ThemeToggle />
+                </div>
+              </AppShell.Header>
+              <AppShell.Navbar p="md" className={classes.navbar}>
+                <Navbar />
+              </AppShell.Navbar>
+              <AppShell.Main>{children}</AppShell.Main>
+            </AppShell>
+          </AuthWrapper>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </ReduxProvider>
   );
 }

@@ -62,3 +62,5 @@ export const studentTableColumns: Array<MRT_ColumnDef<User>> = [
     header: "Room",
   },
 ];
+
+export const iitbhuEmailRegex = /@.itbhu.ac.in$/;
