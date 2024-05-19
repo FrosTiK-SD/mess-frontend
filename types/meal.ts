@@ -2,7 +2,7 @@ import { Filter, PopulatedWith, RedefineKeyTypes } from "./util";
 
 export interface MealType {
   _id: string;
-  startTime: string; // Only for representational purposes
+  startTime: string;
   endTime: string;
   name: string; // Only for representational purposes eg Breakfast lunch dinner
   cost: number;
@@ -52,5 +52,6 @@ export interface MenuItem {
   label: string;
   cost: number; // Assumed to be Rupees and is number to make it machine readable
   mess: string;
+  description?: string;
   imgUrl?: string;
 }

@@ -69,7 +69,7 @@ function MessComponent({ mess }: { mess: MessPopulated }) {
 
   return (
     <div
-      className="my-2 min-w-[90vw] max-w-[700px] rounded-md px-10 py-4 md:min-w-[500px]"
+      className="my-2 min-w-[85vw] max-w-[600px] rounded-md px-2 py-4 md:min-w-[100px] md:px-10"
       style={{
         boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
       }}
@@ -122,7 +122,7 @@ function MessComponent({ mess }: { mess: MessPopulated }) {
             </Tabs.List>
 
             <Tabs.Panel value="menu">
-              <Menu />
+              <Menu mess={mess} />
             </Tabs.Panel>
 
             <Tabs.Panel value="students">Messages tab content</Tabs.Panel>
