@@ -48,3 +48,6 @@ next-env.d.ts
 
 # Environment Variables
 .env
+
+# Editor settings
+.vscode
