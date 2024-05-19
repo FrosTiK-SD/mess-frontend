@@ -1,5 +1,9 @@
 import { NavbarElementSchema } from "@/types/navbar";
-import { IconBuildingSkyscraper, IconSchool } from "@tabler/icons-react";
+import {
+  IconBowl,
+  IconBuildingSkyscraper,
+  IconSchool,
+} from "@tabler/icons-react";
 
 export const navbarSchema: Array<NavbarElementSchema> = [
   {
@@ -11,5 +15,10 @@ export const navbarSchema: Array<NavbarElementSchema> = [
     icon: IconBuildingSkyscraper,
     label: "Hostels",
     path: "/admin/hostels",
+  },
+  {
+    icon: IconBowl,
+    label: "Mess",
+    path: "/mess",
   },
 ];

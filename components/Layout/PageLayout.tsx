@@ -16,47 +16,56 @@ import classes from "./PageLayout.module.css";
 const ThemeToggle = dynamic(() => import("../Theme/ThemeToggle"), {
   ssr: false,
 });
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export function PageLayout({ children }: { children: React.ReactNode }) {
   const [navbarOpened, { toggle: toggleNavbar }] = useDisclosure();
 
   return (
     <ThemeProvider>
-      <AppShell
-        header={{ height: 60 }}
-        navbar={{
-          width: 250,
-          breakpoint: "sm",
-          collapsed: { mobile: !navbarOpened },
-        }}
-      >
-        <AppShell.Header className={classes.topNav}>
-          <div className="flex h-full flex-row justify-between px-4 py-2">
-            <div className="flex flex-row">
-              <Burger
-                opened={navbarOpened}
-                onClick={toggleNavbar}
-                hiddenFrom="sm"
-                size="md"
-              />
-              <Link href="/" className="flex flex-row items-center space-x-2">
-                <Image
-                  src={ASSETS.iitbhu_logo}
-                  alt="IIT BHU LOGO"
-                  width={40}
-                  height={40}
+      <QueryClientProvider client={queryClient}>
+        <AppShell
+          header={{ height: 60 }}
+          navbar={{
+            width: 250,
+            breakpoint: "sm",
+            collapsed: { mobile: !navbarOpened },
+          }}
+        >
+          <AppShell.Header className={classes.topNav}>
+            <div className="flex h-full flex-row justify-between px-4 py-2">
+              <div className="flex flex-row">
+                <Burger
+                  opened={navbarOpened}
+                  onClick={toggleNavbar}
+                  hiddenFrom="sm"
+                  size="md"
                 />
-                <Typography variant="h3">IIT BHU</Typography>
-              </Link>
+                <Link href="/" className="flex flex-row items-center space-x-2">
+                  <Image
+                    src={ASSETS.iitbhu_logo}
+                    alt="IIT BHU LOGO"
+                    width={40}
+                    height={40}
+                  />
+                  <Typography variant="h3">IIT BHU</Typography>
+                </Link>
+              </div>
+              <ThemeToggle />
             </div>
-            <ThemeToggle />
-          </div>
-        </AppShell.Header>
-        <AppShell.Navbar p="md" className={classes.navbar}>
-          <Navbar />
-        </AppShell.Navbar>
-        <AppShell.Main>{children}</AppShell.Main>
-      </AppShell>
+          </AppShell.Header>
+          <AppShell.Navbar p="md" className={classes.navbar}>
+            <Navbar />
+          </AppShell.Navbar>
+          <AppShell.Main>{children}</AppShell.Main>
+        </AppShell>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }
