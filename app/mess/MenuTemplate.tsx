@@ -267,13 +267,13 @@ function MenuTemplate({
               <Radio
                 className="cursor-pointer"
                 value="overwrite"
-                label="Overwrite"
+                label="Create"
                 description="This menu will be the applied as the full menu for the selected days"
               />
               <Radio
                 className="cursor-pointer"
                 value="append"
-                label="Append"
+                label="Add"
                 description="This menu items selected will be added to the already present menu of the selected dates"
               />
             </Radio.Group>

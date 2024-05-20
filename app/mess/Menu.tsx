@@ -121,21 +121,6 @@ function MenuDisplay({ date, mess }: { date: Date; mess: MessPopulated }) {
         </div>
         <p>₹ {selectedMeal?.type.cost}</p>
       </div>
-      <div className="mt-5 flex items-center justify-between">
-        <div>
-          <Typography variant="h6">Food Menu</Typography>
-          {!mealFetchCall.isLoading && (
-            <p className="text-xs font-light">
-              Total{" "}
-              <b className="text-green-500">{selectedMeal?.menu.length}</b>{" "}
-              items
-            </p>
-          )}
-        </div>
-        <div className="flex gap-2">
-          <IconPlus className="cursor-pointer" />
-        </div>
-      </div>
       {mealFetchCall.isLoading && <Spinner className="m-auto my-5" />}
       {!mealFetchCall.isLoading && (
         <div className="my-5">
@@ -151,7 +136,7 @@ function MenuDisplay({ date, mess }: { date: Date; mess: MessPopulated }) {
                   >
                     <IconInfoCircle size={15} />
                   </Tooltip>
-                  <Typography variant="h6">Cost</Typography>
+                  <Typography variant="h6">Extra Cost</Typography>
                 </div>
               </div>
               <ScrollArea mah={150}>
