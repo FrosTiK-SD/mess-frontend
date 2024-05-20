@@ -21,11 +21,13 @@ import {
   IconFridge,
   IconInfoCircle,
   IconPlus,
+  IconToolsKitchen2,
 } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import MenuTemplate from "./MenuTemplate";
 import { MessPopulated } from "@/types/mess";
+import AddMenuItem from "./AddFoodItems";
 
 export interface MealMap {
   [key: string]: MealPopulated;
@@ -41,7 +43,8 @@ function MenuDisplay({ date, mess }: { date: Date; mess: MessPopulated }) {
 
   const [selectedMeal, setSelectedMeal] = useState<MealPopulated>();
   const [mealTypeOptions, setMealTypeOptions] = useState<ComboboxData>([]);
-  const [menuTemplateModalState, menuTemplateModal] = useDisclosure();
+  const [modifyMenuModalState, modifyMenuModal] = useDisclosure();
+  const [addMenuItemsModalState, addMenuItemsModal] = useDisclosure();
 
   const mealPopulatedListToMealTypeMapper = (
     mealPopulatedList: Array<MealPopulated>,
@@ -83,12 +86,20 @@ function MenuDisplay({ date, mess }: { date: Date; mess: MessPopulated }) {
   return (
     <div>
       <Modal
-        opened={menuTemplateModalState}
-        onClose={menuTemplateModal.close}
+        opened={modifyMenuModalState}
+        onClose={modifyMenuModal.close}
         centered
         title="Modify Meal Plan"
       >
-        <MenuTemplate messId={mess._id} close={menuTemplateModal.close} />
+        <MenuTemplate messId={mess._id} close={modifyMenuModal.close} />
+      </Modal>
+      <Modal
+        opened={addMenuItemsModalState}
+        onClose={addMenuItemsModal.close}
+        centered
+        title="Add Food Items"
+      >
+        <AddMenuItem messId={mess._id} close={addMenuItemsModal.close} />
       </Modal>
       <div className="my-2">
         <Select
@@ -167,10 +178,16 @@ function MenuDisplay({ date, mess }: { date: Date; mess: MessPopulated }) {
               </ScrollArea>
               <Divider className="my-2" />
               <NavLink
+                leftSection={<IconToolsKitchen2 size={20} />}
+                rightSection={<IconChevronRight />}
+                label="Add Food Items"
+                onClick={() => addMenuItemsModal.open()}
+              />
+              <NavLink
                 leftSection={<IconFridge size={20} />}
                 rightSection={<IconChevronRight />}
                 label="Modify Meal Plan"
-                onClick={() => menuTemplateModal.open()}
+                onClick={() => modifyMenuModal.open()}
               />
             </div>
           ) : (

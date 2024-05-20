@@ -307,7 +307,7 @@ function MenuTemplate({
             disabled={selectedDates.state.length && applyMode ? false : true}
             onClick={() => setStep((step) => step + 1)}
           >
-            Next
+            SUBMIT
           </Button>
         )}
         {step == 3 && (

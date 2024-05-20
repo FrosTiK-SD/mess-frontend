@@ -55,3 +55,5 @@ export interface MenuItem {
   description?: string;
   imgUrl?: string;
 }
+
+export type CreateMenuItem = Omit<MenuItem, "_id">;
