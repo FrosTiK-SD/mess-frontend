@@ -56,4 +56,22 @@ export type UserPopulatedWith<PopulatedKeys extends keyof User> = PopulatedWith<
   PopulatedKeys
 >;
 
+export type StudentMini = Pick<
+  User,
+  | "_id"
+  | "firstName"
+  | "middleName"
+  | "lastName"
+  | "rollNo"
+  | "department"
+  | "allocatedHostel"
+  | "allocatedRoom"
+>;
+
 export type UserFilter = Filter<User>;
+
+export interface StudentStatsByMessIdResponse {
+  attended: StudentMini[];
+  notAttended: StudentMini[];
+  notEnrolled: StudentMini[];
+}

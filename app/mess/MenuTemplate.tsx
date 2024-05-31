@@ -12,12 +12,11 @@ import {
   Radio,
   Select,
   Stepper,
-  Switch,
 } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { SyntheticEvent, useState } from "react";
+import { useState } from "react";
 import { useUniqueArrayState } from "react-use-object-state";
 import weekday from "dayjs/plugin/weekday";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";

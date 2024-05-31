@@ -1,3 +1,4 @@
+import { StudentMini } from "./user";
 import { Filter, PopulatedWith, RedefineKeyTypes } from "./util";
 
 export interface MealType {
@@ -7,13 +8,6 @@ export interface MealType {
   name: string; // Only for representational purposes eg Breakfast lunch dinner
   cost: number;
   mess: string;
-}
-
-export interface StudentMini {
-  _id: string;
-  name: string;
-  hostelName: string;
-  room: string;
 }
 
 export enum Day {
