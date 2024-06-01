@@ -6,17 +6,17 @@ export const dummyMealPopulated: MealPopulated[] = [
     attendedStudents: [
       {
         _id: "32r23",
-        hostelName: "Rajputana",
-        name: "DevRAJ",
-        room: "Not145",
+        allocatedHostel: "Rajputana",
+        firstName: "DevRAJ",
+        allocatedRoom: "Not145",
       },
     ],
     removedStudents: [
       {
         _id: "32r23",
-        hostelName: "Saraaiyyaa",
-        name: "Soummikk",
-        room: "IDK",
+        allocatedHostel: "Saraaiyyaa",
+        firstName: "Soummikk",
+        allocatedRoom: "IDK",
       },
     ],
     date: new Date().getTime(),
@@ -45,17 +45,17 @@ export const dummyMealPopulated: MealPopulated[] = [
     attendedStudents: [
       {
         _id: "32r23",
-        hostelName: "Rajputana",
-        name: "DevRAJ",
-        room: "Not145",
+        allocatedHostel: "Rajputana",
+        firstName: "DevRAJ",
+        allocatedRoom: "Not145",
       },
     ],
     removedStudents: [
       {
         _id: "32r23",
-        hostelName: "Saraaiyyaa",
-        name: "Soummikk",
-        room: "IDK",
+        allocatedHostel: "Saraaiyyaa",
+        firstName: "Soummikk",
+        allocatedRoom: "IDK",
       },
     ],
     date: new Date().getTime(),

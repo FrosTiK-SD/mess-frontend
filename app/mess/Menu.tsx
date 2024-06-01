@@ -28,6 +28,7 @@ import { useEffect, useState } from "react";
 import MenuTemplate from "./MenuTemplate";
 import { MessPopulated } from "@/types/mess";
 import AddMenuItem from "./AddFoodItems";
+import MenuItemViewer from "./MenuItemViewer";
 
 export interface MealMap {
   [key: string]: MealPopulated;
@@ -126,41 +127,7 @@ function MenuDisplay({ date, mess }: { date: Date; mess: MessPopulated }) {
         <div className="my-5">
           {selectedMeal?.menu.length ? (
             <div className="">
-              <div className="my-2 flex items-center justify-between">
-                <Typography variant="h6">Item Name</Typography>
-                <div className="flex items-center gap-1">
-                  <Tooltip
-                    className="cursor-pointer"
-                    label="The cost here only is effective if it is taken as an extra item"
-                    color="grape"
-                  >
-                    <IconInfoCircle size={15} />
-                  </Tooltip>
-                  <Typography variant="h6">Extra Cost</Typography>
-                </div>
-              </div>
-              <ScrollArea mah={150}>
-                {selectedMeal.menu.map((menuItem: MenuItem) => (
-                  <div
-                    key={`Meal_${selectedMeal._id}_Item_${menuItem._id}`}
-                    className="my-2 flex items-center justify-between"
-                  >
-                    <div>
-                      <Typography variant="h6" className="text-sm font-medium">
-                        {menuItem.label}
-                      </Typography>
-                      {menuItem.description && (
-                        <p className="mt-[-2px] text-xs font-light">
-                          {menuItem.description}
-                        </p>
-                      )}
-                    </div>
-                    <Typography variant="h6" className="text-sm font-medium">
-                      ₹ {menuItem.cost}
-                    </Typography>
-                  </div>
-                ))}
-              </ScrollArea>
+              <MenuItemViewer mess={mess} menu={selectedMeal.menu} />
               <Divider className="my-2" />
               <NavLink
                 leftSection={<IconToolsKitchen2 size={20} />}

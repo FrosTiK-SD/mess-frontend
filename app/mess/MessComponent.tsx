@@ -17,6 +17,7 @@ import tabClass from "./Tab.module.css";
 import Menu from "./Menu";
 import { useViewportSize } from "@mantine/hooks";
 import StudentViewer from "./StudentViewer";
+import MenuItems from "./MenuItems";
 
 function MessComponent({ mess }: { mess: MessPopulated }) {
   const [showDetails, setShowDetails] = useState<Boolean>(false);
@@ -130,7 +131,9 @@ function MessComponent({ mess }: { mess: MessPopulated }) {
               <StudentViewer mess={mess} />
             </Tabs.Panel>
 
-            <Tabs.Panel value="foodItems">Settings tab content</Tabs.Panel>
+            <Tabs.Panel value="foodItems">
+              <MenuItems mess={mess} />
+            </Tabs.Panel>
           </Tabs>
         </div>
       )}

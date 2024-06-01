@@ -5,12 +5,20 @@ import { Button, Input, NumberInput, TextInput } from "@mantine/core";
 import { IconCircleCheck } from "@tabler/icons-react";
 import React, { useState } from "react";
 
-function AddMenuItem({ messId, close }: { messId: string; close: () => void }) {
+function AddMenuItem({
+  messId,
+  close,
+  editMenu,
+}: {
+  messId: string;
+  close: () => void;
+  editMenu?: MenuItem;
+}) {
   const [menuItem, setMenuItem] = useState<CreateMenuItem>({
-    cost: NaN,
-    label: "",
+    cost: editMenu?.cost || NaN,
+    label: editMenu?.label || "",
     mess: messId,
-    description: "",
+    description: editMenu?.description || "",
   });
   const [submitted, setSubmitted] = useState<boolean>(false);
 
@@ -72,7 +80,7 @@ function AddMenuItem({ messId, close }: { messId: string; close: () => void }) {
               disabled={!(!Number.isNaN(menuItem.cost) && menuItem.label != "")}
               onClick={handleSubmit}
             >
-              SUBMIT
+              {editMenu ? "UPDATE" : "SUBMIT"}
             </Button>
           </div>
         </div>
