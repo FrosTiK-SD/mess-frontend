@@ -1,5 +1,7 @@
 import { Department } from "@/constants/departments";
+import { MealByStudent, MealPopulatedMini } from "@/types/meal";
 import { StudentMini, StudentStatsByMessIdResponse } from "@/types/user";
+import { dummyMealPopulated } from "./menu";
 
 export const fakeStudentMini: StudentMini[] = [
   {
@@ -28,4 +30,10 @@ export const studentStatsByMessIdDemoResponse: StudentStatsByMessIdResponse = {
   attended: fakeStudentMini,
   notAttended: fakeStudentMini,
   notEnrolled: fakeStudentMini,
+};
+
+export const fakeMealByStudent: MealByStudent = {
+  date: new Date().getTime(),
+  // @ts-ignore
+  meals: [dummyMealPopulated as MealPopulatedMini],
 };

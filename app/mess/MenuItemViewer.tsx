@@ -13,7 +13,7 @@ function MenuItemViewer({
   menu,
   edit,
 }: {
-  mess: MessPopulated;
+  mess?: MessPopulated;
   menu: MenuItem[];
   edit?: boolean;
 }) {
@@ -29,7 +29,7 @@ function MenuItemViewer({
       >
         <AddMenuItem
           close={editMenuItemModalAction.close}
-          messId={mess._id}
+          messId={mess?._id || ""}
           editMenu={selectedEditMenuItem}
         />
       </Modal>
@@ -47,7 +47,7 @@ function MenuItemViewer({
         </div>
       </div>
       <div className="no-scrollbar max-h-[200px] overflow-y-scroll">
-        {menu.map((menuItem: MenuItem) => (
+        {menu?.map((menuItem: MenuItem) => (
           <div
             key={`Menu_Item_${menuItem._id}`}
             className="my-3 flex items-center justify-between"

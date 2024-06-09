@@ -41,6 +41,11 @@ export type MealPopulated = RedefineKeyTypes<
   }
 >;
 
+export type MealPopulatedMini = Omit<
+  MealPopulated,
+  "removedStudents" | "attendedStudents"
+>;
+
 export interface MenuItem {
   _id: string;
   label: string;
@@ -51,3 +56,8 @@ export interface MenuItem {
 }
 
 export type CreateMenuItem = Omit<MenuItem, "_id">;
+
+export interface MealByStudent {
+  date: number;
+  meals: MealPopulatedMini[];
+}

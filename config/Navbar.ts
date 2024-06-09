@@ -9,12 +9,12 @@ export const navbarSchema: Array<NavbarElementSchema> = [
   {
     icon: IconSchool,
     label: "Students",
-    path: "/admin/students",
+    path: "/student/mess",
   },
   {
     icon: IconBuildingSkyscraper,
-    label: "Hostels",
-    path: "/admin/hostels",
+    label: "Admin",
+    path: "/admin/students",
   },
   {
     icon: IconBowl,
