@@ -1,24 +1,40 @@
 "use client";
-import { IconCalendar, IconChevronRight, IconPlus } from "@tabler/icons-react";
-import React, { useEffect, useState } from "react";
 import { Spinner, Typography } from "@/components/components";
-import { DatePicker } from "@mantine/dates";
-import {
-  ActionIcon,
-  ComboboxData,
-  Input,
-  NavLink,
-  Select,
-} from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
-import { Day, MealPopulated } from "@/types/meal";
 import { dummyMealPopulated } from "@/temp/menu";
+import { MealPopulated, MenuItem } from "@/types/meal";
+import {
+  ComboboxData,
+  Divider,
+  Input,
+  Modal,
+  NavLink,
+  ScrollArea,
+  Select,
+  Tooltip,
+} from "@mantine/core";
+import { DatePicker } from "@mantine/dates";
+import { useDisclosure } from "@mantine/hooks";
+import {
+  IconCalendar,
+  IconChevronRight,
+  IconClock,
+  IconFridge,
+  IconInfoCircle,
+  IconPlus,
+  IconToolsKitchen2,
+} from "@tabler/icons-react";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import MenuTemplate from "./MenuTemplate";
+import { MessPopulated } from "@/types/mess";
+import AddMenuItem from "./AddFoodItems";
+import MenuItemViewer from "./MenuItemViewer";
 
 export interface MealMap {
   [key: string]: MealPopulated;
 }
 
-function MenuDisplay({ date }: { date: Date }) {
+function MenuDisplay({ date, mess }: { date: Date; mess: MessPopulated }) {
   const mealFetchCall = useQuery({
     queryKey: [`menu_display_${date}`],
     queryFn: () => {
@@ -28,6 +44,8 @@ function MenuDisplay({ date }: { date: Date }) {
 
   const [selectedMeal, setSelectedMeal] = useState<MealPopulated>();
   const [mealTypeOptions, setMealTypeOptions] = useState<ComboboxData>([]);
+  const [modifyMenuModalState, modifyMenuModal] = useDisclosure();
+  const [addMenuItemsModalState, addMenuItemsModal] = useDisclosure();
 
   const mealPopulatedListToMealTypeMapper = (
     mealPopulatedList: Array<MealPopulated>,
@@ -68,6 +86,22 @@ function MenuDisplay({ date }: { date: Date }) {
 
   return (
     <div>
+      <Modal
+        opened={modifyMenuModalState}
+        onClose={modifyMenuModal.close}
+        centered
+        title="Modify Meal Plan"
+      >
+        <MenuTemplate messId={mess._id} close={modifyMenuModal.close} />
+      </Modal>
+      <Modal
+        opened={addMenuItemsModalState}
+        onClose={addMenuItemsModal.close}
+        centered
+        title="Add Food Items"
+      >
+        <AddMenuItem messId={mess._id} close={addMenuItemsModal.close} />
+      </Modal>
       <div className="my-2">
         <Select
           data={mealTypeOptions}
@@ -79,31 +113,35 @@ function MenuDisplay({ date }: { date: Date }) {
           }
         />
       </div>
-      <div>
-        <div className=""></div>
-      </div>
-      <div className="mt-5 flex items-center justify-between">
-        <div>
-          <Typography variant="h6">Food Menu</Typography>
-          {!mealFetchCall.isLoading && (
-            <p className="text-xs font-light">
-              Total{" "}
-              <b className="text-green-500">
-                {Object.keys(mealFetchCall.data || {}).length}
-              </b>{" "}
-              items
-            </p>
-          )}
+      <div className="flex justify-between">
+        <div className="flex items-center gap-1">
+          <IconClock size={15} />
+          <p>
+            {selectedMeal?.type.startTime} - {selectedMeal?.type.endTime}
+          </p>
         </div>
-        <div className="flex gap-2">
-          <IconPlus className="cursor-pointer" />
-        </div>
+        <p>₹ {selectedMeal?.type.cost}</p>
       </div>
       {mealFetchCall.isLoading && <Spinner className="m-auto my-5" />}
       {!mealFetchCall.isLoading && (
         <div className="my-5">
-          {mealFetchCall.data?.length ? (
-            <div className=""></div>
+          {selectedMeal?.menu.length ? (
+            <div className="">
+              <MenuItemViewer mess={mess} menu={selectedMeal.menu} />
+              <Divider className="my-2" />
+              <NavLink
+                leftSection={<IconToolsKitchen2 size={20} />}
+                rightSection={<IconChevronRight />}
+                label="Add Food Items"
+                onClick={() => addMenuItemsModal.open()}
+              />
+              <NavLink
+                leftSection={<IconFridge size={20} />}
+                rightSection={<IconChevronRight />}
+                label="Modify Meal Plan"
+                onClick={() => modifyMenuModal.open()}
+              />
+            </div>
           ) : (
             <div className="m-auto text-center text-sm">Nothing to display</div>
           )}
@@ -113,7 +151,7 @@ function MenuDisplay({ date }: { date: Date }) {
   );
 }
 
-function Menu() {
+function Menu({ mess }: { mess: MessPopulated }) {
   const [chosenDate, setChosenDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   return (
@@ -145,7 +183,7 @@ function Menu() {
           />
 
           <div>
-            <MenuDisplay date={chosenDate} />
+            <MenuDisplay date={chosenDate} mess={mess} />
           </div>
         </div>
       )}
