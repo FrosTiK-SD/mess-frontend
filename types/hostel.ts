@@ -5,8 +5,7 @@ import { PopulatedWith, RedefineKeyTypes } from "./util";
 export interface Hostel {
   _id: string;
   name: string;
-  Rooms: Array<string>;
-  Users: Array<string>;
+  inmates: Array<string>;
   caretakers: Array<string>;
 }
 
