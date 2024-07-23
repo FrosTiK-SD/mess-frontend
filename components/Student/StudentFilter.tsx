@@ -1,7 +1,7 @@
 import { Course } from "@/constants/courses";
 import { Department } from "@/constants/departments";
-import { DeepReadonly } from "@/types/util";
 import { UserFilter } from "@/types/user";
+import { DeepReadonly } from "@/types/util";
 import { DateToYear, YearToDate } from "@/utils/student";
 import { Chip, TagsInput } from "@mantine/core";
 import { YearPickerInput } from "@mantine/dates";
@@ -19,7 +19,7 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
         label="Start Year"
         type="multiple"
         placeholder="Pick Start Year"
-        value={YearToDate(filter.startYear)}
+        value={YearToDate(filter.instituteProfile.startYear)}
         onChange={(newDates) =>
           setFilter((prevFilter) => ({
             ...prevFilter,
@@ -32,7 +32,7 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
         label="End Year"
         type="multiple"
         placeholder="Pick End Year"
-        value={YearToDate(filter.endYear)}
+        value={YearToDate(filter.instituteProfile.endYear)}
         onChange={(newDates) =>
           setFilter((prevFilter) => ({
             ...prevFilter,
@@ -44,7 +44,7 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
         Department
         <Chip.Group
           multiple
-          value={[...filter.department]}
+          value={[...filter.instituteProfile.department]}
           onChange={(newDepartments) =>
             setFilter((prevFilter) => ({
               ...prevFilter,
@@ -70,7 +70,7 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
         Courses
         <Chip.Group
           multiple
-          value={[...filter.course]}
+          value={[...filter.instituteProfile.course]}
           onChange={(newCourses) =>
             setFilter((prevFilter) => ({
               ...prevFilter,

@@ -1,11 +1,7 @@
 import { Course } from "@/constants/courses";
 import { Department } from "@/constants/departments";
 import { Permission } from "@/constants/permissions";
-import { Filter, PopulatedWith, RedefineKeyTypes } from "./util";
-import { HostelPopulated } from "./hostel";
-import { Mess } from "./mess";
-import { Room } from "./room";
-import { UserGroup } from "./userGroup";
+import { Filter } from "./util";
 
 export interface User {
   // IAM
@@ -16,44 +12,57 @@ export interface User {
   middleName: string;
   lastName: string;
 
-  //Allocation Details for students
-  allocatedHostel: string;
-  allocatedMess: string;
-  allocatedRoom: string;
+  allocationDetails: AllocationDetails;
 
-  //Academic Details
-  startYear: number;
-  endYear: number;
-  rollNo: string;
-  department: Department;
-  course: Course;
+  instituteProfile: InstituteProfile;
 
-  //Managing Details
-  managingHostels: Array<string>;
-  managingMesses: Array<string>;
+  managingDetails: ManagingDetails;
 
   //Contact Details
   email: string;
   mobile: string;
 }
 
-// export interface UserPopulated extends RedefineKeyTypes<User,"groups"| "allocatedHostel" | "allocatedMess"|"allocatedRoom" | "managingHostels"|"managingMesses">{
-//    groups :
-// }
-export type UserPopulated = RedefineKeyTypes<
-  User,
-  {
-    groups: Array<UserGroup>;
+export interface InstituteProfile {
+  startYear: number;
+  endYear: number;
+  rollNo: number;
+  department: Department;
+  course: Course;
+}
 
-    allocatedHostel: Pick<HostelPopulated, "_id" | "name" | "caretakers">;
-    allocatedRoom: Room;
-    allocatedMess: Pick<Mess, "_id" | "hostel" | "name">;
-  }
->;
-export type UserPopulatedWith<PopulatedKeys extends keyof User> = PopulatedWith<
-  User,
-  UserPopulated,
-  PopulatedKeys
->;
+export interface AllocationDetails {
+  hostel: string; // hostel id
+  mess: string; // mess id
+  room: string; // room id
+}
+
+export interface ManagingDetails {
+  hostel: string; // managing hostel id
+  mess: string; // managing mess id
+}
+
+// export type UserPopulated = RedefineKeyTypes<
+//   User,
+//   {
+//     groups: Array<UserGroup>;
+
+//     allocatedHostel: Pick<HostelPopulated, "_id" | "name" | "caretakers">;
+//     allocatedRoom: Room;
+//     allocatedMess: Pick<Mess, "_id" | "hostel" | "name">;
+//   }
+// >;
+// export type UserPopulatedWith<PopulatedKeys extends keyof User> = PopulatedWith<
+//   User,
+//   UserPopulated,
+//   PopulatedKeys
+// >;
 
 export type UserFilter = Filter<User>;
+
+export type UserMini = Pick<
+  User,
+  "_id" | "firstName" | "middleName" | "lastName" | "email" | "mobile"
+>;
+
+export type StudentMini = UserMini & Pick<User, "instituteProfile">;

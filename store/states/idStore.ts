@@ -1,30 +1,8 @@
-import { Course } from "@/constants/courses";
-import { Department } from "@/constants/departments";
+import { defaultUser } from "@/constants/user";
 import { User } from "@/types/user";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const initialState: User = {
-  _id: "",
-  rollNo: "",
-  department: Department.NONE,
-  email: "",
-  allocatedHostel: "",
-  allocatedMess: "",
-  allocatedRoom: "",
-  managingHostels: [],
-  managingMesses: [],
-  middleName: "",
-  permissions: [],
-
-  endYear: 0,
-  startYear: 0,
-
-  course: Course.NONE,
-  firstName: "",
-  groups: [],
-  lastName: "",
-  mobile: "",
-};
+const initialState: User = defaultUser;
 
 export type UpdateRoles = User;
 export const idStoreSlice = createSlice({

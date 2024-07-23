@@ -1,26 +1,62 @@
 import { User, UserFilter } from "@/types/user";
 import { GetName } from "@/utils/student";
 import { MRT_ColumnDef } from "mantine-react-table";
+import { Course } from "./courses";
+import { Department } from "./departments";
 
 export const defaultFilter: UserFilter = {
   _id: [],
-  allocatedHostel: [],
-  allocatedMess: [],
-  allocatedRoom: [],
-  course: [],
-  department: [],
+  allocationDetails: {
+    hostel: [],
+    mess: [],
+    room: [],
+  },
   email: [],
-  endYear: [],
   firstName: [],
   groups: [],
+  instituteProfile: {
+    course: [],
+    department: [],
+    endYear: [],
+    rollNo: [],
+    startYear: [],
+  },
   lastName: [],
-  managingHostels: [],
-  managingMesses: [],
+  managingDetails: {
+    hostel: [],
+    mess: [],
+  },
   middleName: [],
   mobile: [],
   permissions: [],
-  rollNo: [],
-  startYear: [],
+};
+
+export const defaultUser: User = {
+  _id: "",
+  groups: [],
+  permissions: [],
+
+  allocationDetails: {
+    hostel: "",
+    mess: "",
+    room: "",
+  },
+  email: "",
+  mobile: "",
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  instituteProfile: {
+    course: Course.NONE,
+    department: Department.NONE,
+    endYear: 0,
+    rollNo: 0,
+    startYear: 0,
+  },
+  managingDetails: {
+    hostel: "",
+    mess: "",
+  },
 };
 
 export const studentTableColumns: Array<MRT_ColumnDef<User>> = [
@@ -42,22 +78,23 @@ export const studentTableColumns: Array<MRT_ColumnDef<User>> = [
     header: "Course",
   },
   {
-    accessorFn: (user) => `${user.startYear} - ${user.endYear}`,
+    accessorFn: (user) =>
+      `${user.instituteProfile.startYear} - ${user.instituteProfile.endYear}`,
     id: "batch",
     header: "Batch",
   },
   {
-    accessorFn: (user) => user.allocatedHostel || "N/A",
+    accessorFn: (user) => user.allocationDetails.hostel || "N/A",
     id: "allocatedHostel",
     header: "Hostel",
   },
   {
-    accessorFn: (user) => user.allocatedMess || "N/A",
+    accessorFn: (user) => user.allocationDetails.mess || "N/A",
     id: "allocatedMess",
     header: "Mess",
   },
   {
-    accessorFn: (user) => user.allocatedRoom || "N/A",
+    accessorFn: (user) => user.allocationDetails.room || "N/A",
     id: "allocatedRoom",
     header: "Room",
   },

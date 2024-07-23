@@ -3,15 +3,11 @@ import { Hostel } from "@/types/hostel";
 export let hostelsSample: Array<Hostel> = [
   {
     _id: "1",
-    caretakers: [],
     name: "Hostel 1",
-    inmates: [],
   },
   {
     _id: "2",
-    caretakers: [],
     name: "Hostel 2",
-    inmates: [],
   },
 ];
 
