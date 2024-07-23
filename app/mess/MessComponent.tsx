@@ -16,6 +16,8 @@ import React, { useState } from "react";
 import tabClass from "./Tab.module.css";
 import Menu from "./Menu";
 import { useViewportSize } from "@mantine/hooks";
+import StudentViewer from "./StudentViewer";
+import MenuItems from "./MenuItems";
 
 function MessComponent({ mess }: { mess: MessPopulated }) {
   const [showDetails, setShowDetails] = useState<Boolean>(false);
@@ -69,7 +71,7 @@ function MessComponent({ mess }: { mess: MessPopulated }) {
 
   return (
     <div
-      className="my-2 min-w-[90vw] max-w-[700px] rounded-md px-10 py-4 md:min-w-[500px]"
+      className="my-2 min-w-[85vw] max-w-[600px] rounded-md px-2 py-4 md:min-w-[100px] md:px-10"
       style={{
         boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
       }}
@@ -122,12 +124,16 @@ function MessComponent({ mess }: { mess: MessPopulated }) {
             </Tabs.List>
 
             <Tabs.Panel value="menu">
-              <Menu />
+              <Menu mess={mess} />
             </Tabs.Panel>
 
-            <Tabs.Panel value="students">Messages tab content</Tabs.Panel>
+            <Tabs.Panel value="students">
+              <StudentViewer mess={mess} />
+            </Tabs.Panel>
 
-            <Tabs.Panel value="foodItems">Settings tab content</Tabs.Panel>
+            <Tabs.Panel value="foodItems">
+              <MenuItems mess={mess} />
+            </Tabs.Panel>
           </Tabs>
         </div>
       )}

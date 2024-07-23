@@ -47,6 +47,15 @@ dependencies:
   react-dom:
     specifier: ^18
     version: 18.3.1(react@18.3.1)
+  react-layout-masonry:
+    specifier: ^1.1.0
+    version: 1.1.0(react@18.3.1)
+  react-masonry:
+    specifier: ^1.0.7
+    version: 1.0.7
+  react-use-object-state:
+    specifier: ^1.1.4
+    version: 1.1.4(react@18.3.1)
 
 devDependencies:
   '@types/node':
@@ -5274,6 +5283,20 @@ packages:
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
+  /react-layout-masonry@1.1.0(react@18.3.1):
+    resolution: {integrity: sha512-EVDj8ICCKiZIYAfdZZyuIHzYTTXcwWdLr9B6IB+vKBa39tpIjoTIhpgcLsxurrYy3+le6JXTsQIduS2/8MpmFQ==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      react: 18.3.1
+    dev: false
+
+  /react-masonry@1.0.7:
+    resolution: {integrity: sha512-cKhinTeygGtm+8y7YCTMKXNKtU0toJAcOBD4q7fv+JTc94bj93/xut3iZvjD60lZYek+WGM6en5w8P+63zHN9Q==}
+    dependencies:
+      react: 18.3.1
+    dev: false
+
   /react-number-format@5.3.4(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-2hHN5mbLuCDUx19bv0Q8wet67QqYK6xmtLQeY5xx+h7UXiMmRtaCwqko4mMPoKXLc6xAzwRrutg8XbTRlsfjRg==}
     peerDependencies:
@@ -5349,6 +5372,15 @@ packages:
       use-latest: 1.2.1(@types/react@18.3.1)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /react-use-object-state@1.1.4(react@18.3.1):
+    resolution: {integrity: sha512-MCTf6UPM49ZgdbryxZhpC2o72oGQbNk7qufwZN6S/B0PNoGvZ0Ic9qzQXaKrCdEjiA1uHV43DEbOUStijAKcKw==}
+    engines: {node: '>=8', npm: '>=5'}
+    peerDependencies:
+      react: '>=16.9.0'
+    dependencies:
+      react: 18.3.1
     dev: false
 
   /react@18.3.1:

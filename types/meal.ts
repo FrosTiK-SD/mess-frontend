@@ -1,19 +1,13 @@
+import { StudentMini } from "./user";
 import { Filter, PopulatedWith, RedefineKeyTypes } from "./util";
 
 export interface MealType {
   _id: string;
-  startTime: string; // Only for representational purposes
+  startTime: string;
   endTime: string;
   name: string; // Only for representational purposes eg Breakfast lunch dinner
   cost: number;
   mess: string;
-}
-
-export interface StudentMini {
-  _id: string;
-  name: string;
-  hostelName: string;
-  room: string;
 }
 
 export enum Day {
@@ -47,10 +41,23 @@ export type MealPopulated = RedefineKeyTypes<
   }
 >;
 
+export type MealPopulatedMini = Omit<
+  MealPopulated,
+  "removedStudents" | "attendedStudents"
+>;
+
 export interface MenuItem {
   _id: string;
   label: string;
   cost: number; // Assumed to be Rupees and is number to make it machine readable
   mess: string;
+  description?: string;
   imgUrl?: string;
+}
+
+export type CreateMenuItem = Omit<MenuItem, "_id">;
+
+export interface MealByStudent {
+  date: number;
+  meals: MealPopulatedMini[];
 }
