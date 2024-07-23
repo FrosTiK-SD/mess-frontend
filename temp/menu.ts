@@ -1,3 +1,4 @@
+import { Department } from "@/constants/departments";
 import { Day, MealPopulated, MealType, MenuItem } from "@/types/meal";
 
 export const dummyMealPopulated: MealPopulated[] = [
@@ -9,6 +10,10 @@ export const dummyMealPopulated: MealPopulated[] = [
         allocatedHostel: "Rajputana",
         firstName: "DevRAJ",
         allocatedRoom: "Not145",
+        lastName: "Raj",
+        department: Department.MAT,
+        middleName: "",
+        rollNo: "20124016",
       },
     ],
     removedStudents: [
@@ -17,6 +22,10 @@ export const dummyMealPopulated: MealPopulated[] = [
         allocatedHostel: "Saraaiyyaa",
         firstName: "Soummikk",
         allocatedRoom: "IDK",
+        department: Department.CSE,
+        lastName: "Data",
+        middleName: "",
+        rollNo: "20004000",
       },
     ],
     date: new Date().getTime(),
@@ -48,6 +57,10 @@ export const dummyMealPopulated: MealPopulated[] = [
         allocatedHostel: "Rajputana",
         firstName: "DevRAJ",
         allocatedRoom: "Not145",
+        lastName: "Raj",
+        department: Department.MAT,
+        middleName: "",
+        rollNo: "20124016",
       },
     ],
     removedStudents: [
@@ -56,6 +69,10 @@ export const dummyMealPopulated: MealPopulated[] = [
         allocatedHostel: "Saraaiyyaa",
         firstName: "Soummikk",
         allocatedRoom: "IDK",
+        department: Department.CSE,
+        lastName: "Data",
+        middleName: "",
+        rollNo: "20004000",
       },
     ],
     date: new Date().getTime(),
