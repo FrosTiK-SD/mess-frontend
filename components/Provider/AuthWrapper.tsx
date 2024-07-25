@@ -48,7 +48,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     let loginState: boolean = false;
 
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_AUTH_BACKEND}/api/token/student/verify`,
+      `${process.env.NEXT_PUBLIC_AUTH_BACKEND}/user/token`,
       {
         validateStatus: (_) => true,
       },
