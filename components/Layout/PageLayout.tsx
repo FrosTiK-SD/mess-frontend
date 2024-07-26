@@ -11,6 +11,7 @@ import { Typography } from "../components";
 import { Navbar } from "./Navbar";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AuthWrapper } from "../Provider/AuthWrapper";
 
 import ReduxProvider from "../Provider/Redux";
@@ -30,6 +31,7 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
     <ReduxProvider>
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools />
           <AuthWrapper>
             <AppShell
               header={{ height: 60 }}

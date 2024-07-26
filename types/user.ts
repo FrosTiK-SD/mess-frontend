@@ -1,7 +1,8 @@
 import { Course } from "@/constants/courses";
 import { Department } from "@/constants/departments";
 import { Permission } from "@/constants/permissions";
-import { Filter } from "./util";
+import { UserGroup } from "./userGroup";
+import { Filter, RedefineKeyTypes } from "./util";
 
 export interface User {
   // IAM
@@ -42,16 +43,12 @@ export interface ManagingDetails {
   mess: string; // managing mess id
 }
 
-// export type UserPopulated = RedefineKeyTypes<
-//   User,
-//   {
-//     groups: Array<UserGroup>;
-
-//     allocatedHostel: Pick<HostelPopulated, "_id" | "name" | "caretakers">;
-//     allocatedRoom: Room;
-//     allocatedMess: Pick<Mess, "_id" | "hostel" | "name">;
-//   }
-// >;
+export type UserPopulated = RedefineKeyTypes<
+  User,
+  {
+    groups: Array<UserGroup>;
+  }
+>;
 // export type UserPopulatedWith<PopulatedKeys extends keyof User> = PopulatedWith<
 //   User,
 //   UserPopulated,

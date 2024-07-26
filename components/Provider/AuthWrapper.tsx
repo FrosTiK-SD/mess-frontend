@@ -1,9 +1,9 @@
 "use client";
 
 import { auth } from "@/firebase/auth";
-import { User } from "@/types/user";
+import { UserPopulated } from "@/types/user";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { LoadingPage } from "../LoadingPage";
 import { LoginPage } from "../LoginPage";
@@ -17,11 +17,26 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     queryKey: ["currentUser"],
     enabled: auth.currentUser != null,
     queryFn: async () => {
-      const response: AxiosResponse<{ user: User }> = await axios.get(
-        `${process.env.NEXT_PUBLIC_AUTH_BACKEND}/user/token`,
-      );
+      try {
+        const response: AxiosResponse<{ user: UserPopulated }> =
+          await axios.get(`${process.env.NEXT_PUBLIC_AUTH_BACKEND}/user/token`);
 
-      return response.data.user;
+        return response.data.user;
+      } catch (ae) {
+        if (!(ae instanceof AxiosError && ae.response?.status == 400)) {
+          throw ae;
+        }
+
+        if (ae.response.data.error == "ERR_NO_DOCS") {
+          return (
+            await axios.post(
+              `${process.env.NEXT_PUBLIC_AUTH_BACKEND}/user/token`,
+            )
+          ).data.user;
+        } else {
+          throw ae;
+        }
+      }
     },
   });
   const queryClient = useQueryClient();
