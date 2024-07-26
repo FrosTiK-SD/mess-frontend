@@ -2,7 +2,7 @@ import { Course } from "@/constants/courses";
 import { Department } from "@/constants/departments";
 import { Role } from "@/constants/permissions";
 import { UserGroup } from "./userGroup";
-import { Filter, RedefineKeyTypes } from "./util";
+import { RedefineKeyTypes } from "./util";
 
 export interface User {
   // IAM
@@ -55,7 +55,14 @@ export type UserPopulated = RedefineKeyTypes<
 //   PopulatedKeys
 // >;
 
-export type UserFilter = Filter<User>;
+// export type UserFilter = Filter<User>;
+export interface UserFilter {
+  startYear: Array<number>;
+  endYear: Array<number>;
+  department: Array<Department>;
+  courses: Array<Course>;
+  rollNos: Array<number>;
+}
 
 export type UserMini = Pick<
   User,

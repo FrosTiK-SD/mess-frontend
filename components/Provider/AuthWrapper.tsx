@@ -41,12 +41,8 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   });
   const queryClient = useQueryClient();
 
-  console.log("Firebase Current User : ", auth.currentUser);
-
   useEffect(() => {
-    console.log("Auth Use Effect");
     auth.authStateReady().then(() => {
-      console.log("Initial Auth State Loaded");
       setLoading(false);
     });
     auth.onAuthStateChanged(() => {

@@ -5,30 +5,11 @@ import { Course } from "./courses";
 import { Department } from "./departments";
 
 export const defaultFilter: UserFilter = {
-  _id: [],
-  allocationDetails: {
-    hostel: [],
-    mess: [],
-    room: [],
-  },
-  email: [],
-  firstName: [],
-  groups: [],
-  instituteProfile: {
-    course: [],
-    department: [],
-    endYear: [],
-    rollNo: [],
-    startYear: [],
-  },
-  lastName: [],
-  managingDetails: {
-    hostel: [],
-    mess: [],
-  },
-  middleName: [],
-  mobile: [],
-  permissions: [],
+  courses: [],
+  department: [],
+  endYear: [],
+  rollNos: [],
+  startYear: [],
 };
 
 export const defaultUser: User = {
@@ -70,11 +51,13 @@ export const studentTableColumns: Array<MRT_ColumnDef<User>> = [
     header: "Name",
   },
   {
-    accessorKey: "department",
+    accessorKey: "instituteProfile.department",
+    id: "department",
     header: "Department",
   },
   {
-    accessorKey: "course",
+    accessorKey: "instituteProfile.course",
+    id: "course",
     header: "Course",
   },
   {

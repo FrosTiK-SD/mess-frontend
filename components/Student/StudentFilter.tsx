@@ -19,7 +19,7 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
         label="Start Year"
         type="multiple"
         placeholder="Pick Start Year"
-        value={YearToDate(filter.instituteProfile.startYear)}
+        value={YearToDate(filter.startYear)}
         onChange={(newDates) =>
           setFilter((prevFilter) => ({
             ...prevFilter,
@@ -32,7 +32,7 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
         label="End Year"
         type="multiple"
         placeholder="Pick End Year"
-        value={YearToDate(filter.instituteProfile.endYear)}
+        value={YearToDate(filter.endYear)}
         onChange={(newDates) =>
           setFilter((prevFilter) => ({
             ...prevFilter,
@@ -44,7 +44,7 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
         Department
         <Chip.Group
           multiple
-          value={[...filter.instituteProfile.department]}
+          value={[...filter.department]}
           onChange={(newDepartments) =>
             setFilter((prevFilter) => ({
               ...prevFilter,
@@ -70,7 +70,7 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
         Courses
         <Chip.Group
           multiple
-          value={[...filter.instituteProfile.course]}
+          value={[...filter.courses]}
           onChange={(newCourses) =>
             setFilter((prevFilter) => ({
               ...prevFilter,
