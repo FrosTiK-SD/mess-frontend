@@ -1,13 +1,13 @@
 import { Course } from "@/constants/courses";
 import { Department } from "@/constants/departments";
-import { Permission } from "@/constants/permissions";
+import { Role } from "@/constants/permissions";
 import { UserGroup } from "./userGroup";
 import { Filter, RedefineKeyTypes } from "./util";
 
 export interface User {
   // IAM
   _id: string;
-  permissions: Array<Permission>;
+  permissions: Array<Role>;
   groups: Array<string>;
   firstName: string;
   middleName: string;

@@ -1,8 +1,8 @@
-import { Permission } from "@/constants/permissions";
+import { Role } from "@/constants/permissions";
 
 export interface UserGroup {
-    _id : string;
-    name : string;
-    description?:string;
-    permissions: Array<Permission>
+  _id: string;
+  name: string;
+  description?: string;
+  roles: Array<Role>;
 }
