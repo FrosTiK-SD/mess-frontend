@@ -12,7 +12,7 @@ import {
 import { IconBrandGoogle, IconEyeCheck, IconEyeOff } from "@tabler/icons-react";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -41,13 +41,13 @@ export default function LoginPage() {
     }
   }
 
-  useMemo(() => {
+  useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         router.replace(redirectURL);
       }
     });
-  }, []);
+  }, [redirectURL, router]);
 
   return (
     <Box mx="auto" className="mt-10 flex max-w-[300px] flex-col justify-center">
@@ -86,7 +86,7 @@ export default function LoginPage() {
         </div>
         {error && (
           <Typography
-            className="m-10 m-auto text-center font-light"
+            className="m-10 text-center font-light"
             variant="h6"
             color="red"
           >
@@ -108,7 +108,7 @@ export default function LoginPage() {
           </div>
           {googleLoginError && (
             <Typography
-              className="m-10 m-auto text-center font-light"
+              className="m-10 text-center font-light"
               variant="h6"
               color="red"
             >

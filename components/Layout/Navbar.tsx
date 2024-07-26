@@ -2,6 +2,9 @@
 
 import { navbarSchema } from "@/config/Navbar";
 import { ASSETS } from "@/constants/assets";
+import { auth } from "@/firebase/auth";
+import { User } from "@/types/user";
+import { GetName } from "@/utils/student";
 import {
   AppShell,
   Avatar,
@@ -11,13 +14,17 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import classes from "./Navbar.module.css";
 
 export function Navbar() {
   const router = useRouter();
-  const image = "";
+  const userQuery = useQuery<User>({ queryKey: ["currentUser"] });
+  const imageURL: string = auth.currentUser?.photoURL ?? "";
+  const name: string = userQuery.isSuccess ? GetName(userQuery.data) : "";
+  const email: string = auth.currentUser?.email ?? "";
   return (
     <>
       <AppShell.Section grow component={ScrollArea}>
@@ -42,11 +49,11 @@ export function Navbar() {
         >
           <div className="flex flex-row items-center justify-center space-x-2">
             <div className="flex flex-row space-x-2">
-              <Avatar src={image || ASSETS.iitbhu_logo} radius="xl" />
+              <Avatar src={imageURL || ASSETS.iitbhu_logo} radius="xl" />
               <div className="grow">
-                <Text size="sm">User Name</Text>
+                <Text size="sm">{name}</Text>
                 <Text c="dimmed" size="xs">
-                  example.name@gmail.com
+                  {email}
                 </Text>
               </div>
             </div>
