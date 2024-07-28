@@ -4,6 +4,7 @@ import { studentTableColumns } from "@/constants/user";
 import { User } from "@/types/user";
 import { Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import axios from "axios";
 import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
 import { Dispatch, SetStateAction } from "react";
 import { AssignHostelModal, AssignMessModal } from "./AssignModals";
@@ -56,8 +57,18 @@ export function StudentTable({
       <AssignHostelModal
         opened={hostelModalOpened}
         onClose={closeHostalModal}
-        hostels={[]}
-        handleHostelAssign={() => {}}
+        hostels={[{ _id: "66a356b78dfad0dc369865e9", name: "Sample Hostel" }]}
+        handleHostelAssign={(hostel) => {
+          axios.put(
+            `${process.env.NEXT_PUBLIC_AUTH_BACKEND}/admin/user/assignHostel`,
+            {
+              hostel: hostel,
+              users: Object.entries(selectionState)
+                .filter(([_, selected]) => selected)
+                .map(([student, _]) => student),
+            },
+          );
+        }}
       />
       <AssignMessModal
         opened={messModalOpened}

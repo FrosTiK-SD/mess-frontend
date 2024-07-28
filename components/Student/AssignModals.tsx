@@ -1,13 +1,15 @@
 import { Hostel } from "@/types/hostel";
 import { Mess } from "@/types/mess";
 import { Button, Modal, ModalProps, Select } from "@mantine/core";
+import { useState } from "react";
 
 type AssignHostelModalProps = ModalProps & {
   hostels: Array<Hostel>;
-  handleHostelAssign: () => void;
+  handleHostelAssign: (hostel: string) => void;
 };
 export function AssignHostelModal(modalProps: AssignHostelModalProps) {
   const { hostels, handleHostelAssign } = modalProps;
+  const [hostel, setHostel] = useState<string>("");
   return (
     <Modal {...modalProps} title="Assign Hostel">
       <Select
@@ -15,8 +17,10 @@ export function AssignHostelModal(modalProps: AssignHostelModalProps) {
           label: hostel.name,
           value: hostel._id,
         }))}
+        value={hostel}
+        onChange={(value) => setHostel(value ?? "")}
       />
-      <Button onClick={handleHostelAssign}>Assign</Button>
+      <Button onClick={() => handleHostelAssign(hostel)}>Assign</Button>
     </Modal>
   );
 }
