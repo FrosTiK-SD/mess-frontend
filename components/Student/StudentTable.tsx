@@ -73,8 +73,30 @@ export function StudentTable({
       <AssignMessModal
         opened={messModalOpened}
         onClose={closeMessModal}
-        messes={[]}
-        handleMessAssign={() => {}}
+        messes={[
+          {
+            _id: "66a356b78dfad0dc369865e9",
+            caretakers: [],
+            hostel: "000000000000000000000000",
+            name: "Sample Mess",
+            users: [],
+          },
+        ]}
+        handleMessAssign={(mess) => {
+          axios
+            .put(
+              `${process.env.NEXT_PUBLIC_AUTH_BACKEND}/admin/user/assignMess`,
+              {
+                mess,
+                users: Object.entries(selectionState)
+                  .filter(([_, selected]) => selected)
+                  .map(([student, _]) => student),
+              },
+            )
+            .then(() => {
+              alert("Mess assigned");
+            });
+        }}
       />
       <MantineReactTable table={table} />
     </div>

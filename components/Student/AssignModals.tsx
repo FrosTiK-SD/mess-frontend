@@ -27,10 +27,11 @@ export function AssignHostelModal(modalProps: AssignHostelModalProps) {
 
 type AssignMessModalProps = ModalProps & {
   messes: Array<Mess>;
-  handleMessAssign: () => void;
+  handleMessAssign: (mess: string) => void;
 };
 export function AssignMessModal(modalProps: AssignMessModalProps) {
   const { messes, handleMessAssign } = modalProps;
+  const [mess, setMess] = useState<string>("");
 
   return (
     <Modal {...modalProps} title="Assign Mess">
@@ -39,8 +40,10 @@ export function AssignMessModal(modalProps: AssignMessModalProps) {
           label: mess.name,
           value: mess._id,
         }))}
+        value={mess}
+        onChange={(newMess) => setMess(newMess ?? "")}
       />
-      <Button onClick={handleMessAssign}>Assign</Button>
+      <Button onClick={() => handleMessAssign(mess)}>Assign</Button>
     </Modal>
   );
 }
