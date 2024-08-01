@@ -7,14 +7,17 @@ import {
   modifySampleHostel,
 } from "@/temp/hostels";
 import { Hostel } from "@/types/hostel";
-import { Title } from "@mantine/core";
+import { Button, Title } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import {
   MRT_ColumnDef,
   MRT_EditActionButtons,
   MantineReactTable,
   useMantineReactTable,
 } from "mantine-react-table";
+import { CreateHostelModal } from "./CreateHostelModal";
 
 const hostelColumns: Array<MRT_ColumnDef<Hostel>> = [
   {
@@ -24,6 +27,10 @@ const hostelColumns: Array<MRT_ColumnDef<Hostel>> = [
 ];
 
 export default function HostelsPage() {
+  const [
+    createHostelModalIsOpen,
+    { open: openCreateHostelModal, close: closeCreateHostelModal },
+  ] = useDisclosure(false);
   const queryClient = useQueryClient();
 
   const hostelsQuery = useQuery({
@@ -31,9 +38,13 @@ export default function HostelsPage() {
     queryFn: () => hostelsSample,
   });
 
-  const createHostel = useMutation<number, Error, Hostel, number>({
-    mutationFn: (newHostel) =>
-      new Promise((resolve, reject) => resolve(hostelsSample.push(newHostel))),
+  const createHostelMutation = useMutation<number, Error, Hostel, number>({
+    mutationFn: (newHostel) => {
+      return axios.post(
+        `${process.env.NEXT_PUBLIC_AUTH_BACKEND}/admin/hostel`,
+        newHostel,
+      );
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [hostelsQueryKey] });
     },
@@ -66,7 +77,6 @@ export default function HostelsPage() {
     enableEditing: true,
     enableFullScreenToggle: false,
     getRowId: (row) => row._id,
-    onEditingRowSave: ({ row }) => createHostel.mutate(row.original),
     renderCreateRowModalContent: ({ table, row, internalEditComponents }) => {
       return (
         <div className="flex flex-col">
@@ -81,10 +91,24 @@ export default function HostelsPage() {
     initialState: {
       density: "xs",
     },
+    renderTopToolbarCustomActions: () => {
+      return (
+        <div>
+          <Button onClick={openCreateHostelModal}>Create Hostel</Button>
+        </div>
+      );
+    },
   });
 
   return (
     <div className="flex w-full justify-center">
+      <CreateHostelModal
+        opened={createHostelModalIsOpen}
+        onClose={closeCreateHostelModal}
+        onSave={(hostel) => {
+          createHostelMutation.mutate(hostel);
+        }}
+      />
       <div className="mt-8 w-[90%] ">
         <MantineReactTable table={table} />
       </div>
