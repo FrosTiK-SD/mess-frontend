@@ -1,1 +1,2 @@
 export const ZeroId = "000000000000000000000000";
+export const AUTH_SERVER_DOMAIN = process.env.NEXT_PUBLIC_AUTH_BACKEND;

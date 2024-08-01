@@ -1,16 +1,10 @@
 "use client";
 
-import { hostelsQueryKey } from "@/constants/tanstackQuery";
-import {
-  deleteSampleHostel,
-  hostelsSample,
-  modifySampleHostel,
-} from "@/temp/hostels";
+import { useCreateHostelMutation, useGetHostelsQuery } from "@/hooks/hostel";
 import { Hostel } from "@/types/hostel";
 import { Button, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   MRT_ColumnDef,
   MRT_EditActionButtons,
@@ -33,41 +27,9 @@ export default function HostelsPage() {
   ] = useDisclosure(false);
   const queryClient = useQueryClient();
 
-  const hostelsQuery = useQuery({
-    queryKey: [hostelsQueryKey],
-    queryFn: () => hostelsSample,
-  });
+  const hostelsQuery = useGetHostelsQuery({ withQueryFunction: true });
 
-  const createHostelMutation = useMutation<number, Error, Hostel, number>({
-    mutationFn: (newHostel) => {
-      return axios.post(
-        `${process.env.NEXT_PUBLIC_AUTH_BACKEND}/admin/hostel`,
-        newHostel,
-      );
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [hostelsQueryKey] });
-    },
-  });
-  const deleteHostel = useMutation<any, Error, string, any>({
-    mutationFn: (hostelId) =>
-      new Promise((resolve, _) => resolve(deleteSampleHostel(hostelId))),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [hostelsQueryKey] });
-    },
-  });
-
-  const updateHostel = useMutation<
-    void,
-    Error,
-    { hostelId: string; updatedHostel: Hostel },
-    void
-  >({
-    mutationFn: ({ hostelId, updatedHostel }) =>
-      new Promise((resolve) =>
-        resolve(modifySampleHostel(hostelId, updatedHostel)),
-      ),
-  });
+  const createHostelMutation = useCreateHostelMutation();
 
   const table = useMantineReactTable({
     columns: hostelColumns,

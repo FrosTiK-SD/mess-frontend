@@ -22,7 +22,13 @@ const ThemeToggle = dynamic(() => import("../Theme/ThemeToggle"), {
   ssr: false,
 });
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 15 * 60 * 1000,
+    },
+  },
+});
 
 export function PageLayout({ children }: { children: React.ReactNode }) {
   const [navbarOpened, { toggle: toggleNavbar }] = useDisclosure();
