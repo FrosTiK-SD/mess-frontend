@@ -1,17 +1,22 @@
 "use client";
 
 import { HostelPopulatedViewer } from "@/components/Hostel/HostelPopulated";
-import { getSampleHostelPopulated } from "@/temp/hostelPopulated";
+import { LoadingComponent } from "@/components/LoadingOverlay";
+import { useGetHostelPopulatedById } from "@/hooks/hostel";
 import { useParams } from "next/navigation";
 
 export default function HostelPage() {
   const { hostelId } = useParams();
-  const sampleHostelPopulated = getSampleHostelPopulated(
-    parseInt(hostelId.toString()),
-  );
+  const hostelPopulatedQuery = useGetHostelPopulatedById(hostelId.toString(), {
+    withQueryFunction: true,
+  });
   return (
     <div>
-      <HostelPopulatedViewer hostelPopulated={sampleHostelPopulated} />
+      {hostelPopulatedQuery.isSuccess ? (
+        <HostelPopulatedViewer hostelPopulated={hostelPopulatedQuery.data} />
+      ) : (
+        <LoadingComponent visible={hostelPopulatedQuery.isLoading} />
+      )}
     </div>
   );
 }

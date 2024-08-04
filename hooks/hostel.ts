@@ -1,6 +1,6 @@
 import { hostelsQueryKey } from "@/constants/tanstackQuery";
 import { AUTH_SERVER_DOMAIN } from "@/constants/utils";
-import { Hostel } from "@/types/hostel";
+import { Hostel, HostelPopulated } from "@/types/hostel";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -42,5 +42,23 @@ export function useCreateHostelMutation() {
         exact: true,
       });
     },
+  });
+}
+
+export function useGetHostelPopulatedById(
+  hostelId: string,
+  { withQueryFunction }: FetchQueryOptions,
+) {
+  return useQuery({
+    queryKey: [hostelsQueryKey, hostelId],
+    queryFn: !withQueryFunction
+      ? undefined
+      : async () => {
+          return (
+            await axios.get<{ hostel: HostelPopulated }>(
+              `${AUTH_SERVER_DOMAIN}/admin/hostels/${hostelId}`,
+            )
+          ).data.hostel;
+        },
   });
 }
