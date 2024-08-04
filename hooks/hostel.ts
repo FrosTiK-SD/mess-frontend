@@ -56,7 +56,7 @@ export function useGetHostelPopulatedById(
       : async () => {
           return (
             await axios.get<{ hostel: HostelPopulated }>(
-              `${AUTH_SERVER_DOMAIN}/admin/hostels/${hostelId}`,
+              `${AUTH_SERVER_DOMAIN}/admin/populatedHostels/${hostelId}`,
             )
           ).data.hostel;
         },
