@@ -2,31 +2,40 @@
 
 import { HostelPopulatedViewer } from "@/components/Hostel/HostelPopulated";
 import { LoadingComponent } from "@/components/LoadingOverlay";
-import { useGetHostelPopulatedById } from "@/hooks/hostel";
+import { useGetHostelById } from "@/hooks/hostel";
+import { useGetHostelRooms } from "@/hooks/rooms";
 import { RoomPopulated } from "@/types/room";
 import { FindDocument, RemoveDocument } from "@/utils/utils";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
 export default function HostelPage() {
-  const { hostelId } = useParams();
-  const hostelPopulatedQuery = useGetHostelPopulatedById(hostelId.toString(), {
-    withQueryFunction: true,
-  });
+  let { hostelId } = useParams();
+  console.log(hostelId);
+  hostelId =
+    typeof hostelId == "string" ? hostelId : hostelId?.[hostelId.length - 1];
+
+  const roomsQuery = useGetHostelRooms(hostelId);
+  const hostelQuery = useGetHostelById(hostelId);
+
   const [roomSelection, setRoomSelection] = useState<Array<RoomPopulated>>([]);
 
   return (
     <div>
-      {hostelPopulatedQuery.isSuccess ? (
+      {roomsQuery.isSuccess && hostelQuery.isSuccess ? (
         <HostelPopulatedViewer
-          hostelPopulated={hostelPopulatedQuery.data}
+          hostelRooms={roomsQuery.data}
+          hostel={hostelQuery.data}
+          caretakers={[]}
           onTilePress={(room) =>
             setRoomSelection((rooms) => updateRoomSelection(rooms, room))
           }
           selectedRooms={roomSelection}
         />
       ) : (
-        <LoadingComponent visible={hostelPopulatedQuery.isLoading} />
+        <LoadingComponent
+          visible={roomsQuery.isLoading || hostelQuery.isLoading}
+        />
       )}
     </div>
   );

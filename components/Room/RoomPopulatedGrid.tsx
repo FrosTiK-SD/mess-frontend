@@ -38,9 +38,9 @@ export function RenderRoomGridTile({
   let className = "";
   if (isSelected) {
     className = "bg-purple-400";
-  } else if (!room.available || room.allocatedTo.length == room.capacity) {
+  } else if (!room.available || room.allottedTo.length == room.occupancy) {
     className = "bg-red-600";
-  } else if (room.allocatedTo.length === 0) {
+  } else if (room.allottedTo.length === 0) {
     className = "bg-green-600";
   } else {
     className = "bg-orange-600";
@@ -53,7 +53,7 @@ export function RenderRoomGridTile({
       className={`${className} border border-white text-center text-white`}
       onClick={() => onTilePress?.(room)}
     >
-      {room.name}
+      {room.number}
     </Grid.Col>
   );
 }
@@ -73,12 +73,12 @@ export function SelectedRoomsView(props: {
 function SelectedRoom(props: { room: RoomPopulated }) {
   return (
     <Accordion.Item key={props.room._id} value={props.room._id}>
-      <Accordion.Control>Room {props.room.name}</Accordion.Control>
+      <Accordion.Control>Room {props.room.number}</Accordion.Control>
       <Accordion.Panel>
         <div>
           Allocated To
           <div>
-            {props.room.allocatedTo.map((student) => (
+            {props.room.allottedTo.map((student) => (
               <div key={student._id}>Hello</div>
             ))}
           </div>

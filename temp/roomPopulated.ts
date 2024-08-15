@@ -8,11 +8,11 @@ export function getSampleRoomPopulated(
     _id: `room_poped_${seed}`,
     available: seed % 37 !== 0,
     // @ts-ignore
-    allocatedTo: seed % 29 === 0 ? [0] : [],
-    capacity: 2,
+    allottedTo: seed % 29 === 0 ? [0] : [],
+    occupancy: 2,
     floor: Math.floor(seed / 60),
     hostel: hostel,
-    name: seed.toString(),
+    number: seed,
     remarks: "",
   };
 }

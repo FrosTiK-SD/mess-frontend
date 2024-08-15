@@ -15,7 +15,7 @@ export function SelectedRoomView({ room }: { room: RoomPopulated }) {
       <div>
         Occupants
         <div>
-          {room.allocatedTo.map((userMini) => {
+          {room.allottedTo.map((userMini) => {
             return (
               <div key={userMini._id} className="flex flex-row">
                 <div>{GetName(userMini)}</div>

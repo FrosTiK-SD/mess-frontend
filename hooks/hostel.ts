@@ -1,29 +1,17 @@
 import { hostelsQueryKey } from "@/constants/tanstackQuery";
-import { AUTH_SERVER_DOMAIN } from "@/constants/utils";
-import { Hostel, HostelPopulated } from "@/types/hostel";
+import { API_ENDPOINT } from "@/constants/utils";
+import type { Hostel } from "@/types/hostel";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-export interface FetchQueryOptions {
-  withQueryFunction: boolean;
-}
-
-export const defaultFetchQueryOptions: FetchQueryOptions = {
-  withQueryFunction: true,
-};
-
-export function useGetHostelsQuery({ withQueryFunction }: FetchQueryOptions) {
+export function useGetHostelsQuery() {
   return useQuery<Array<Hostel>>({
     queryKey: [hostelsQueryKey],
-    queryFn: !withQueryFunction
-      ? undefined
-      : async () => {
-          return (
-            await axios.get<{ hostels: Array<Hostel> }>(
-              `${AUTH_SERVER_DOMAIN}/admin/hostels`,
-            )
-          ).data.hostels;
-        },
+    queryFn: async () => {
+      return (
+        await axios.get<{ hostels: Array<Hostel> }>(`${API_ENDPOINT}/hostels`)
+      ).data.hostels;
+    },
   });
 }
 
@@ -31,10 +19,7 @@ export function useCreateHostelMutation() {
   const queryClient = useQueryClient();
   return useMutation<any, Error, Hostel>({
     mutationFn: (newHostel) => {
-      return axios.post<Hostel>(
-        `${AUTH_SERVER_DOMAIN}/admin/hostels`,
-        newHostel,
-      );
+      return axios.post<Hostel>(`${API_ENDPOINT}/hostels`, newHostel);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -45,20 +30,51 @@ export function useCreateHostelMutation() {
   });
 }
 
-export function useGetHostelPopulatedById(
-  hostelId: string,
-  { withQueryFunction }: FetchQueryOptions,
-) {
-  return useQuery({
-    queryKey: [hostelsQueryKey, hostelId],
-    queryFn: !withQueryFunction
-      ? undefined
-      : async () => {
-          return (
-            await axios.get<{ hostel: HostelPopulated }>(
-              `${AUTH_SERVER_DOMAIN}/admin/populatedHostels/${hostelId}`,
-            )
-          ).data.hostel;
-        },
+export function useUpdateHostelMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation<any, Error, Hostel>({
+    mutationFn: (updatedHostel) => {
+      return axios.put<Hostel>(
+        `${API_ENDPOINT}/hostels/${updatedHostel._id}`,
+        updatedHostel,
+      );
+    },
+    onSuccess: (_, updatedHostel) => {
+      queryClient.invalidateQueries({
+        queryKey: [hostelsQueryKey],
+        exact: true,
+      });
+      queryClient.invalidateQueries({
+        queryKey: [hostelsQueryKey, updatedHostel._id],
+        exact: true,
+      });
+    },
   });
 }
+
+export function useGetHostelById(hostelId: string) {
+  return useQuery({
+    queryKey: [hostelsQueryKey, hostelId],
+    queryFn: async () => {
+      return (
+        await axios.get<{ hostel: Hostel }>(
+          `${API_ENDPOINT}/hostels/${hostelId}`,
+        )
+      ).data.hostel;
+    },
+  });
+}
+
+// export function useGetHostelPopulatedById(hostelId: string) {
+//   return useQuery({
+//     queryKey: [hostelsQueryKey, hostelId],
+//     queryFn: async () => {
+//       return (
+//         await axios.get<{ hostel: Hostel }>(
+//           `${AUTH_SERVER_DOMAIN}/admin/populatedHostels/${hostelId}`,
+//         )
+//       ).data.hostel;
+//     },
+//   });
+// }

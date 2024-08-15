@@ -1,5 +1,6 @@
-import type { HostelPopulated } from "@/types/hostel";
+import { Hostel } from "@/types/hostel";
 import { RoomPopulated } from "@/types/room";
+import { User } from "@/types/user";
 import { GetName } from "@/utils/student";
 import {
   RoomPopulatedGrid,
@@ -7,19 +8,22 @@ import {
 } from "../Room/RoomPopulatedGrid";
 
 export interface HostelPopulatedParams {
-  hostelPopulated: HostelPopulated;
+  hostel: Hostel;
+  hostelRooms: Array<RoomPopulated>;
+  caretakers: Array<User>;
   selectedRooms: Array<RoomPopulated>;
   onTilePress?: (room: RoomPopulated) => void;
 }
 export function HostelPopulatedViewer({
-  hostelPopulated,
+  hostel,
+  hostelRooms,
+  caretakers,
   selectedRooms,
   onTilePress,
 }: HostelPopulatedParams) {
-  const { caretakers, name } = hostelPopulated;
   return (
     <div>
-      <div>{name} Hostel</div>
+      <div>{hostel.name} Hostel</div>
       <div>
         <div>Caretakers</div>
         {caretakers.map((caretaker) => (
@@ -29,7 +33,7 @@ export function HostelPopulatedViewer({
       <div className="mt-10 px-[5%]">
         <RoomPopulatedGrid
           onTilePress={onTilePress}
-          roomPopulatedList={hostelPopulated.rooms}
+          roomPopulatedList={hostelRooms}
           selectedRooms={selectedRooms}
         />
       </div>

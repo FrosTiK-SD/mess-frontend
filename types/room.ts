@@ -3,13 +3,13 @@ import { StudentMini } from "./user";
 export interface Room {
   _id: string;
   hostel: string;
-  name: string;
+  number: number;
   floor: number;
   available: boolean;
   remarks: string;
-  capacity: number;
+  occupancy: number;
 }
 
 export interface RoomPopulated extends Room {
-  allocatedTo: Array<StudentMini>;
+  allottedTo: Array<StudentMini>;
 }

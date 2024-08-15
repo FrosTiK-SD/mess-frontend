@@ -1,16 +1,20 @@
 "use client";
 
-import { useCreateHostelMutation, useGetHostelsQuery } from "@/hooks/hostel";
+import {
+  useCreateHostelMutation,
+  useGetHostelsQuery,
+  useUpdateHostelMutation,
+} from "@/hooks/hostel";
 import { Hostel } from "@/types/hostel";
 import { Button, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useQueryClient } from "@tanstack/react-query";
 import {
   MRT_ColumnDef,
   MRT_EditActionButtons,
   MantineReactTable,
   useMantineReactTable,
 } from "mantine-react-table";
+import { usePathname, useRouter } from "next/navigation";
 import { CreateHostelModal } from "./CreateHostelModal";
 
 const hostelColumns: Array<MRT_ColumnDef<Hostel>> = [
@@ -25,11 +29,13 @@ export default function HostelsPage() {
     createHostelModalIsOpen,
     { open: openCreateHostelModal, close: closeCreateHostelModal },
   ] = useDisclosure(false);
-  const queryClient = useQueryClient();
 
-  const hostelsQuery = useGetHostelsQuery({ withQueryFunction: true });
-
+  const hostelsQuery = useGetHostelsQuery();
   const createHostelMutation = useCreateHostelMutation();
+  const updateHostelMutation = useUpdateHostelMutation();
+
+  const router = useRouter();
+  const URLPath = usePathname();
 
   const table = useMantineReactTable({
     columns: hostelColumns,
@@ -39,6 +45,18 @@ export default function HostelsPage() {
     enableEditing: true,
     enableFullScreenToggle: false,
     getRowId: (row) => row._id,
+    onEditingRowSave: ({ exitEditingMode, row }) => {
+      updateHostelMutation.mutate(row.original);
+      exitEditingMode();
+    },
+    mantineTableBodyRowProps: ({ row }) => ({
+      onClick: () => {
+        router.push(`${URLPath}/${row.id}`);
+      },
+      style: {
+        cursor: "pointer",
+      },
+    }),
     renderCreateRowModalContent: ({ table, row, internalEditComponents }) => {
       return (
         <div className="flex flex-col">
