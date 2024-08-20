@@ -1,5 +1,6 @@
 "use client";
 
+import { API_ENDPOINT } from "@/constants/utils";
 import { auth } from "@/firebase/auth";
 import { UserPopulated } from "@/types/user";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -19,7 +20,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     queryFn: async () => {
       try {
         const response: AxiosResponse<{ user: UserPopulated }> =
-          await axios.get(`${process.env.NEXT_PUBLIC_AUTH_BACKEND}/user/token`);
+          await axios.get(`${API_ENDPOINT}/token/user`);
 
         return response.data.user;
       } catch (ae) {
@@ -28,11 +29,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
         }
 
         if (ae.response.data.error == "ERR_NO_DOCS") {
-          return (
-            await axios.post(
-              `${process.env.NEXT_PUBLIC_AUTH_BACKEND}/user/token`,
-            )
-          ).data.user;
+          return (await axios.post(`${API_ENDPOINT}/token/user`)).data.user;
         } else {
           throw ae;
         }
