@@ -1,10 +1,10 @@
 import { defaultUser } from "@/constants/user";
-import { User } from "@/types/user";
+import { AppUser } from "@/types/user";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const initialState: User = defaultUser;
+const initialState: AppUser = defaultUser;
 
-export type UpdateRoles = User;
+export type UpdateRoles = AppUser;
 export const idStoreSlice = createSlice({
   name: "idStore",
   // `createSlice` will infer the state type from the `initialState` argument
@@ -14,7 +14,7 @@ export const idStoreSlice = createSlice({
       const { payload } = action;
       // can't be assigned using destructiong as reference of state
       // must not be lost
-      let key: keyof User;
+      let key: keyof AppUser;
       for (key in initialState) {
         (state as any)[key] = payload[key];
       }

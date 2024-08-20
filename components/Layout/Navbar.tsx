@@ -3,7 +3,7 @@
 import { navbarSchema } from "@/config/Navbar";
 import { ASSETS } from "@/constants/assets";
 import { auth } from "@/firebase/auth";
-import { User } from "@/types/user";
+import { AppUser } from "@/types/user";
 import { GetName } from "@/utils/student";
 import {
   AppShell,
@@ -21,7 +21,7 @@ import classes from "./Navbar.module.css";
 
 export function Navbar() {
   const router = useRouter();
-  const userQuery = useQuery<User>({ queryKey: ["currentUser"] });
+  const userQuery = useQuery<AppUser>({ queryKey: ["currentUser"] });
   const imageURL: string = auth.currentUser?.photoURL ?? "";
   const name: string = userQuery.isSuccess ? GetName(userQuery.data) : "";
   const email: string = auth.currentUser?.email ?? "";

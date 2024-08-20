@@ -4,7 +4,7 @@ import { LoadingComponent } from "@/components/LoadingOverlay";
 import { StudentFilter } from "@/components/Student/StudentFilter";
 import { StudentTable } from "@/components/Student/StudentTable";
 import { defaultFilter } from "@/constants/user";
-import { User, UserFilter } from "@/types/user";
+import { AppUser, UserFilter } from "@/types/user";
 import { DeepReadonly } from "@/types/util";
 import { Button } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
@@ -18,7 +18,7 @@ export default function AssignHostel() {
     Record<string, boolean>
   >({});
 
-  const userQuery = useQuery<Array<User>>({
+  const userQuery = useQuery<Array<AppUser>>({
     queryKey: ["users", filter],
     queryFn: async () => {
       const response = await axios.post(

@@ -1,8 +1,9 @@
-import { User, UserFilter } from "@/types/user";
+import { AppUser, UserFilter } from "@/types/user";
 import { GetName } from "@/utils/student";
 import { MRT_ColumnDef } from "mantine-react-table";
 import { Course } from "./courses";
 import { Department } from "./departments";
+import { Role } from "./permissions";
 
 export const defaultFilter: UserFilter = {
   courses: [],
@@ -12,35 +13,23 @@ export const defaultFilter: UserFilter = {
   startYear: [],
 };
 
-export const defaultUser: User = {
+export const defaultUser: AppUser = {
   _id: "",
-  groups: [],
-  permissions: [],
+  role: Role.NONE,
 
-  allocationDetails: {
-    hostel: "",
-    mess: "",
-    room: "",
-  },
   email: "",
   mobile: "",
   firstName: "",
   middleName: "",
   lastName: "",
-  instituteProfile: {
-    course: Course.NONE,
-    department: Department.NONE,
-    endYear: 0,
-    rollNo: 0,
-    startYear: 0,
-  },
-  managingDetails: {
-    hostel: "",
-    mess: "",
-  },
+  course: Course.NONE,
+  department: Department.NONE,
+  endYear: 0,
+  rollNo: 0,
+  startYear: 0,
 };
 
-export const studentTableColumns: Array<MRT_ColumnDef<User>> = [
+export const studentTableColumns: Array<MRT_ColumnDef<AppUser>> = [
   {
     accessorKey: "rollNo",
     header: "Roll No",
@@ -61,26 +50,25 @@ export const studentTableColumns: Array<MRT_ColumnDef<User>> = [
     header: "Course",
   },
   {
-    accessorFn: (user) =>
-      `${user.instituteProfile.startYear} - ${user.instituteProfile.endYear}`,
+    accessorFn: (user) => `${user.startYear} - ${user.endYear}`,
     id: "batch",
     header: "Batch",
   },
-  {
-    accessorFn: (user) => user.allocationDetails.hostel || "N/A",
-    id: "allocatedHostel",
-    header: "Hostel",
-  },
-  {
-    accessorFn: (user) => user.allocationDetails.mess || "N/A",
-    id: "allocatedMess",
-    header: "Mess",
-  },
-  {
-    accessorFn: (user) => user.allocationDetails.room || "N/A",
-    id: "allocatedRoom",
-    header: "Room",
-  },
+  // {
+  //   accessorFn: (user) => user.allocationDetails.hostel || "N/A",
+  //   id: "allocatedHostel",
+  //   header: "Hostel",
+  // },
+  // {
+  //   accessorFn: (user) => user.allocationDetails.mess || "N/A",
+  //   id: "allocatedMess",
+  //   header: "Mess",
+  // },
+  // {
+  //   accessorFn: (user) => user.allocationDetails.room || "N/A",
+  //   id: "allocatedRoom",
+  //   header: "Room",
+  // },
 ];
 
 export const iitbhuEmailRegex = /@.itbhu.ac.in$/;

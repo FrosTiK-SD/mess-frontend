@@ -1,7 +1,7 @@
 import { useBatchCreateHostelRoomsMutation } from "@/hooks/rooms";
 import { Hostel } from "@/types/hostel";
 import { RoomPopulated } from "@/types/room";
-import { User } from "@/types/user";
+import { AppUser } from "@/types/user";
 import { GetName } from "@/utils/student";
 import {
   Button,
@@ -20,7 +20,7 @@ import {
 export interface HostelPopulatedParams {
   hostel: Hostel;
   hostelRooms: Array<RoomPopulated>;
-  caretakers: Array<User>;
+  caretakers: Array<AppUser>;
   selectedRooms: Array<RoomPopulated>;
   onTilePress?: (room: RoomPopulated) => void;
 }

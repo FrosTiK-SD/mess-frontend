@@ -20,7 +20,7 @@ export function SelectedRoomView({ room }: { room: RoomPopulated }) {
               <div key={userMini._id} className="flex flex-row">
                 <div>{GetName(userMini)}</div>
                 <div>{userMini.email}</div>
-                <div>{userMini.instituteProfile.rollNo}</div>
+                <div>{userMini.rollNo}</div>
               </div>
             );
           })}

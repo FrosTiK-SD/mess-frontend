@@ -1,4 +1,4 @@
-import { StudentMini } from "./user";
+import { AppUser } from "./user";
 
 export interface Room {
   _id: string;
@@ -11,5 +11,5 @@ export interface Room {
 }
 
 export interface RoomPopulated extends Room {
-  allottedTo: Array<StudentMini>;
+  allottedTo: Array<AppUser>;
 }

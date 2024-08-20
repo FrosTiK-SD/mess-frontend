@@ -1,7 +1,7 @@
 "use client";
 
 import { studentTableColumns } from "@/constants/user";
-import { User } from "@/types/user";
+import { AppUser } from "@/types/user";
 import { Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import axios from "axios";
@@ -10,7 +10,7 @@ import { Dispatch, SetStateAction } from "react";
 import { AssignHostelModal, AssignMessModal } from "./AssignModals";
 
 export interface StudentTableProps {
-  students: Array<User>;
+  students: Array<AppUser>;
   selectionState: Record<string, boolean>;
   setSelectionState: Dispatch<SetStateAction<Record<string, boolean>>>;
 }
@@ -26,7 +26,7 @@ export function StudentTable({
   const [messModalOpened, { open: openMessModal, close: closeMessModal }] =
     useDisclosure(false);
 
-  const table = useMantineReactTable<User>({
+  const table = useMantineReactTable<AppUser>({
     columns: studentTableColumns,
     data: students,
     enableRowSelection: true,
