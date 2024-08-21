@@ -3,6 +3,7 @@ import { API_ENDPOINT } from "@/constants/utils";
 import { Semester } from "@/types/semester";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
 export function useGetAllSemesters() {
   return useQuery({
@@ -30,4 +31,8 @@ export function useCreateSemesterMutation() {
       });
     },
   });
+}
+
+export function useGetChosenSemester() {
+  return useSearchParams().get("semester");
 }

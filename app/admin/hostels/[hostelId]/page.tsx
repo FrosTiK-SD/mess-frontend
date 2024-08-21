@@ -4,7 +4,8 @@ import { HostelPopulatedViewer } from "@/components/Hostel/HostelPopulated";
 import { LoadingComponent } from "@/components/LoadingOverlay";
 import { useGetHostelById } from "@/hooks/hostel";
 import { useGetHostelRooms } from "@/hooks/rooms";
-import { RoomPopulated } from "@/types/room";
+import { useGetChosenSemester } from "@/hooks/semesters";
+import { RoomWithAllotments } from "@/types/room";
 import { FindDocument, RemoveDocument } from "@/utils/utils";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -15,10 +16,17 @@ export default function HostelPage() {
   hostelId =
     typeof hostelId == "string" ? hostelId : hostelId?.[hostelId.length - 1];
 
-  const roomsQuery = useGetHostelRooms(hostelId);
+  const semester = useGetChosenSemester();
+  const roomsQuery = useGetHostelRooms(
+    hostelId,
+    semester ?? "",
+    semester != null,
+  );
   const hostelQuery = useGetHostelById(hostelId);
 
-  const [roomSelection, setRoomSelection] = useState<Array<RoomPopulated>>([]);
+  const [roomSelection, setRoomSelection] = useState<Array<RoomWithAllotments>>(
+    [],
+  );
 
   return (
     <div>
@@ -42,8 +50,8 @@ export default function HostelPage() {
 }
 
 function updateRoomSelection(
-  prevRooms: Array<RoomPopulated>,
-  room: RoomPopulated,
+  prevRooms: Array<RoomWithAllotments>,
+  room: RoomWithAllotments,
 ) {
   if (FindDocument(prevRooms, room._id) == -1) {
     return [...prevRooms, room];

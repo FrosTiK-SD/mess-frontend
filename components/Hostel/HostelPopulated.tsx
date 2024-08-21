@@ -1,6 +1,6 @@
 import { useBatchCreateHostelRoomsMutation } from "@/hooks/rooms";
 import { Hostel } from "@/types/hostel";
-import { RoomPopulated } from "@/types/room";
+import { RoomWithAllotments } from "@/types/room";
 import { AppUser } from "@/types/user";
 import { GetName } from "@/utils/student";
 import {
@@ -12,17 +12,15 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
-import {
-  RoomPopulatedGrid,
-  SelectedRoomsView,
-} from "../Room/RoomPopulatedGrid";
+import { RoomPopulatedGrid } from "../Room/RoomPopulatedGrid";
+import { SelectedRoomsView } from "../Room/SelectedRoomView";
 
 export interface HostelPopulatedParams {
   hostel: Hostel;
-  hostelRooms: Array<RoomPopulated>;
+  hostelRooms: Array<RoomWithAllotments>;
   caretakers: Array<AppUser>;
-  selectedRooms: Array<RoomPopulated>;
-  onTilePress?: (room: RoomPopulated) => void;
+  selectedRooms: Array<RoomWithAllotments>;
+  onTilePress?: (room: RoomWithAllotments) => void;
 }
 export function HostelPopulatedViewer({
   hostel,

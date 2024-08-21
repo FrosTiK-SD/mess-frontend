@@ -1,5 +1,3 @@
-import { AppUser } from "./user";
-
 export interface Room {
   _id: string;
   hostel: string;
@@ -10,6 +8,6 @@ export interface Room {
   occupancy: number;
 }
 
-export interface RoomPopulated extends Room {
-  allottedTo: Array<AppUser>;
+export interface RoomWithAllotments extends Room {
+  allotments: number;
 }

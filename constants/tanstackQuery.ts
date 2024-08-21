@@ -4,3 +4,4 @@ export const userQueryKey = "user";
 export const hostelsQueryKey = "hostels";
 export const roomsQueryKey = "rooms";
 export const semestersQueryKey = "semesters";
+export const roomAllotmentsQueryKey = "roomAllotments";
