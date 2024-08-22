@@ -1,4 +1,7 @@
-import { roomAllotmentsQueryKey } from "@/constants/tanstackQuery";
+import {
+  roomAllotmentsQueryKey,
+  roomsQueryKey,
+} from "@/constants/tanstackQuery";
 import { API_ENDPOINT } from "@/constants/utils";
 import { RoomAllotment, RoomAllotmentWithUser } from "@/types/roomAllotment";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -27,7 +30,13 @@ export function useGetSemesterRoomAllotmentsWithUser(
   enabled: boolean,
 ) {
   return useQuery({
-    queryKey: [],
+    queryKey: [
+      roomsQueryKey,
+      semesterId,
+      roomsQueryKey,
+      roomId,
+      roomAllotmentsQueryKey,
+    ],
     queryFn: async () =>
       (
         await axios.get<{ roomAllotments: Array<RoomAllotmentWithUser> }>(
