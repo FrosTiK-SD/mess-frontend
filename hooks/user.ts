@@ -1,6 +1,7 @@
+import { Role } from "@/constants/permissions";
 import { API_ENDPOINT } from "@/constants/utils";
 import { AppUser } from "@/types/user";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 export async function FetchUserByRollNo(rollNo: number) {
@@ -12,5 +13,28 @@ export async function FetchUserByRollNo(rollNo: number) {
 export function useGetCachedCurrentUser() {
   return useQuery<AppUser | undefined>({
     queryKey: ["currentUser"],
+  });
+}
+
+export function useGetAllCaretakers() {
+  return useQuery({
+    queryKey: ["caretakers"],
+    queryFn: async () =>
+      (
+        await axios.get<{ caretakers: Array<AppUser> }>(
+          `${API_ENDPOINT}/caretakers`,
+        )
+      ).data.caretakers,
+  });
+}
+
+export function useCreateUserMutation() {
+  const queryClient = useQueryClient();
+  return useMutation<
+    unknown,
+    Error,
+    Partial<AppUser> & { email: string; role: Role }
+  >({
+    mutationFn: (user) => axios.post(`${API_ENDPOINT}/user`, user),
   });
 }

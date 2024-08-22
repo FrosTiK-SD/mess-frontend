@@ -15,7 +15,7 @@ export const defaultFilter: UserFilter = {
 
 export const defaultUser: AppUser = {
   _id: "",
-  role: Role.NONE,
+  role: Role.USER,
 
   email: "",
   mobile: "",

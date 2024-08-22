@@ -1,4 +1,6 @@
+import { useCreateHostelStaffAllotmentMutation } from "@/hooks/hostelStaffAllotments";
 import { useBatchCreateHostelRoomsMutation } from "@/hooks/rooms";
+import { useGetAllCaretakers } from "@/hooks/user";
 import { Hostel } from "@/types/hostel";
 import { RoomWithAllotments } from "@/types/room";
 import { AppUser } from "@/types/user";
@@ -9,9 +11,11 @@ import {
   Modal,
   ModalProps,
   NumberInput,
+  Select,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { isNotEmpty, useField, useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
+import { useState } from "react";
 import { RoomPopulatedGrid } from "../Room/RoomPopulatedGrid";
 import { SelectedRoomsView } from "../Room/SelectedRoomView";
 
@@ -33,6 +37,17 @@ export function HostelPopulatedViewer({
     addRoomsModalOpened,
     { open: openAddRoomsModal, close: closeAddRoomsModal },
   ] = useDisclosure(false);
+
+  const allCaretakers = useGetAllCaretakers();
+  const [addCaretakerMode, setAddCaretakerMode] = useState<boolean>(false);
+  const addCaretakerField = useField<string>({
+    mode: "controlled",
+    initialValue: "",
+    validate: isNotEmpty("Choose a caretaker"),
+  });
+
+  const createHostelStaffAllotment = useCreateHostelStaffAllotmentMutation();
+
   return (
     <div>
       <AddRoomsModal
@@ -46,6 +61,35 @@ export function HostelPopulatedViewer({
         {caretakers.map((caretaker) => (
           <div key={caretaker._id}>{GetName(caretaker)}</div>
         ))}
+        {addCaretakerMode ? (
+          <div className="flex flex-row items-end">
+            <Select
+              label="Caretaker"
+              searchable
+              data={allCaretakers.data?.map((caretaker) => ({
+                label: caretaker.email,
+                value: caretaker._id,
+              }))}
+              {...addCaretakerField.getInputProps()}
+            />
+            <Button
+              onClick={() => {
+                if (addCaretakerField.getValue()) {
+                  createHostelStaffAllotment.mutate({
+                    _id: "",
+                    hostel: hostel._id,
+                    user: addCaretakerField.getValue(),
+                  });
+                  setAddCaretakerMode(false);
+                }
+              }}
+            >
+              Add Caretaker
+            </Button>
+          </div>
+        ) : (
+          <div onClick={() => setAddCaretakerMode(true)}>Add a Caretaker</div>
+        )}
       </div>
       <div>
         <Button onClick={openAddRoomsModal}>Add Rooms</Button>
