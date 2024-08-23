@@ -2,7 +2,9 @@
 
 import { HostelPopulatedViewer } from "@/components/Hostel/HostelPopulated";
 import { LoadingComponent } from "@/components/LoadingOverlay";
+import { Role } from "@/constants/permissions";
 import { useGetHostelById } from "@/hooks/hostel";
+import { useGetHostelStaffAllotmentsWithUser } from "@/hooks/hostelStaffAllotments";
 import { useGetHostelRooms } from "@/hooks/rooms";
 import { useGetChosenSemester } from "@/hooks/semesters";
 import { RoomWithAllotments } from "@/types/room";
@@ -28,13 +30,22 @@ export default function HostelPage() {
     [],
   );
 
+  const staffAllotments = useGetHostelStaffAllotmentsWithUser(hostelId);
+  const hostelStaff = (staffAllotments.data ?? []).map(
+    (allotment) => allotment.user,
+  );
+
+  const caretakers = hostelStaff.filter(
+    (staff) => staff.role == Role.CARETAKER,
+  );
+
   return (
     <div>
       {roomsQuery.isSuccess && hostelQuery.isSuccess ? (
         <HostelPopulatedViewer
           hostelRooms={roomsQuery.data}
           hostel={hostelQuery.data}
-          caretakers={[]}
+          caretakers={caretakers}
           onTilePress={(room) =>
             setRoomSelection((rooms) => updateRoomSelection(rooms, room))
           }

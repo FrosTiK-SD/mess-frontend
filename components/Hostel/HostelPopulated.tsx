@@ -59,7 +59,7 @@ export function HostelPopulatedViewer({
       <div>
         <div>Caretakers</div>
         {caretakers.map((caretaker) => (
-          <div key={caretaker._id}>{GetName(caretaker)}</div>
+          <div key={caretaker._id}>{GetName(caretaker) || "No Name"}</div>
         ))}
         {addCaretakerMode ? (
           <div className="flex flex-row items-end">
