@@ -6,10 +6,10 @@ import { Department } from "./departments";
 import { Role } from "./permissions";
 
 export const defaultFilter: UserFilter = {
-  courses: [],
+  course: [],
   department: [],
   endYear: [],
-  rollNos: [],
+  rollNo: [],
   startYear: [],
 };
 
@@ -40,12 +40,12 @@ export const studentTableColumns: Array<MRT_ColumnDef<AppUser>> = [
     header: "Name",
   },
   {
-    accessorKey: "instituteProfile.department",
+    accessorKey: "department",
     id: "department",
     header: "Department",
   },
   {
-    accessorKey: "instituteProfile.course",
+    accessorKey: "course",
     id: "course",
     header: "Course",
   },
@@ -54,21 +54,6 @@ export const studentTableColumns: Array<MRT_ColumnDef<AppUser>> = [
     id: "batch",
     header: "Batch",
   },
-  // {
-  //   accessorFn: (user) => user.allocationDetails.hostel || "N/A",
-  //   id: "allocatedHostel",
-  //   header: "Hostel",
-  // },
-  // {
-  //   accessorFn: (user) => user.allocationDetails.mess || "N/A",
-  //   id: "allocatedMess",
-  //   header: "Mess",
-  // },
-  // {
-  //   accessorFn: (user) => user.allocationDetails.room || "N/A",
-  //   id: "allocatedRoom",
-  //   header: "Room",
-  // },
 ];
 
 export const iitbhuEmailRegex = /@.itbhu.ac.in$/;

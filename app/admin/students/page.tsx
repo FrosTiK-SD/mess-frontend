@@ -4,11 +4,10 @@ import { LoadingComponent } from "@/components/LoadingOverlay";
 import { StudentFilter } from "@/components/Student/StudentFilter";
 import { StudentTable } from "@/components/Student/StudentTable";
 import { defaultFilter } from "@/constants/user";
-import { AppUser, UserFilter } from "@/types/user";
+import { useGetFilteredUsers } from "@/hooks/user";
+import { UserFilter } from "@/types/user";
 import { DeepReadonly } from "@/types/util";
 import { Button } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useState } from "react";
 
 export default function AssignHostel() {
@@ -18,19 +17,7 @@ export default function AssignHostel() {
     Record<string, boolean>
   >({});
 
-  const userQuery = useQuery<Array<AppUser>>({
-    queryKey: ["users", filter],
-    queryFn: async () => {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_AUTH_BACKEND}/admin/userFiltered`,
-        filter,
-      );
-      return response.data.users;
-    },
-    enabled: false,
-  });
-
-  console.log(filter);
+  const userQuery = useGetFilteredUsers(filter);
 
   return (
     <div>

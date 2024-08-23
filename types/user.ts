@@ -26,8 +26,8 @@ export interface UserFilter {
   startYear: Array<number>;
   endYear: Array<number>;
   department: Array<Department>;
-  courses: Array<Course>;
-  rollNos: Array<number>;
+  course: Array<Course>;
+  rollNo: Array<number>;
 }
 
 export type UserMini = Pick<

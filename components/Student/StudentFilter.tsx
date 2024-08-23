@@ -70,7 +70,7 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
         Courses
         <Chip.Group
           multiple
-          value={[...filter.courses]}
+          value={[...filter.course]}
           onChange={(newCourses) =>
             setFilter((prevFilter) => ({
               ...prevFilter,
@@ -90,6 +90,13 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
           label="Roll Nos"
           placeholder="Press Enter to add a Roll No"
           className="mt-4"
+          value={filter.rollNo.map((rollNo) => rollNo.toString())}
+          onChange={(rollNoArray) =>
+            setFilter({
+              ...filter,
+              rollNo: rollNoArray.map((rollNoString) => parseInt(rollNoString)),
+            })
+          }
         />
       </div>
     </div>
