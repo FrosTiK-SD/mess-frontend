@@ -1,7 +1,11 @@
 "use client";
 
 import { studentTableColumns } from "@/constants/user";
+import { useGetHostelsQuery } from "@/hooks/hostel";
+import { useBatchCreateHostelAllotmentsMutation } from "@/hooks/hostelAllotment";
+import { useGetChosenSemester } from "@/hooks/semesters";
 import { AppUser } from "@/types/user";
+import { SelectedIdsFromSelectionState } from "@/utils/utils";
 import { Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import axios from "axios";
@@ -25,6 +29,10 @@ export function StudentTable({
   ] = useDisclosure(false);
   const [messModalOpened, { open: openMessModal, close: closeMessModal }] =
     useDisclosure(false);
+
+  const hostelsQuery = useGetHostelsQuery();
+  const batchCreateHostelAllotments = useBatchCreateHostelAllotmentsMutation();
+  const chosenSemester = useGetChosenSemester();
 
   const table = useMantineReactTable<AppUser>({
     columns: studentTableColumns,
@@ -57,17 +65,13 @@ export function StudentTable({
       <AssignHostelModal
         opened={hostelModalOpened}
         onClose={closeHostalModal}
-        hostels={[{ _id: "66a356b78dfad0dc369865e9", name: "Sample Hostel" }]}
+        hostels={hostelsQuery.data ?? []}
         handleHostelAssign={(hostel) => {
-          axios.put(
-            `${process.env.NEXT_PUBLIC_AUTH_BACKEND}/admin/user/assignHostel`,
-            {
-              hostel: hostel,
-              users: Object.entries(selectionState)
-                .filter(([_, selected]) => selected)
-                .map(([student, _]) => student),
-            },
-          );
+          batchCreateHostelAllotments.mutate({
+            hostel: hostel,
+            semester: chosenSemester ?? "",
+            users: SelectedIdsFromSelectionState(selectionState),
+          });
         }}
       />
       <AssignMessModal

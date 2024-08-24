@@ -65,16 +65,3 @@ export function useGetHostelById(hostelId: string) {
     },
   });
 }
-
-// export function useGetHostelPopulatedById(hostelId: string) {
-//   return useQuery({
-//     queryKey: [hostelsQueryKey, hostelId],
-//     queryFn: async () => {
-//       return (
-//         await axios.get<{ hostel: Hostel }>(
-//           `${AUTH_SERVER_DOMAIN}/admin/populatedHostels/${hostelId}`,
-//         )
-//       ).data.hostel;
-//     },
-//   });
-// }

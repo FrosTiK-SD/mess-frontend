@@ -27,3 +27,20 @@ export function RemoveDocument<Type extends IdObject>(
 ): Array<Type> {
   return idList.filter((idObject) => idObject._id != id);
 }
+
+const checkForHexRegExp = new RegExp("^[0-9a-fA-F]{24}$");
+export function IsValidObjectId(value: string): boolean {
+  return value.length === 24 && checkForHexRegExp.test(value);
+}
+
+export function SelectedIdsFromSelectionState(
+  selectionState: Record<string, boolean>,
+) {
+  const selectedIds: Array<string> = [];
+  for (const key in selectionState) {
+    if (selectionState[key] && IsValidObjectId(key)) {
+      selectedIds.push(key);
+    }
+  }
+  return selectedIds;
+}
