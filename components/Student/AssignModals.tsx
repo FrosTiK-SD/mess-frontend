@@ -1,13 +1,15 @@
 import { Hostel } from "@/types/hostel";
 import { Mess } from "@/types/mess";
 import { Button, Modal, ModalProps, Select } from "@mantine/core";
+import { useState } from "react";
 
 type AssignHostelModalProps = ModalProps & {
   hostels: Array<Hostel>;
-  handleHostelAssign: () => void;
+  handleHostelAssign: (hostel: string) => void;
 };
 export function AssignHostelModal(modalProps: AssignHostelModalProps) {
   const { hostels, handleHostelAssign } = modalProps;
+  const [hostel, setHostel] = useState<string>("");
   return (
     <Modal {...modalProps} title="Assign Hostel">
       <Select
@@ -15,18 +17,21 @@ export function AssignHostelModal(modalProps: AssignHostelModalProps) {
           label: hostel.name,
           value: hostel._id,
         }))}
+        value={hostel}
+        onChange={(value) => setHostel(value ?? "")}
       />
-      <Button onClick={handleHostelAssign}>Assign</Button>
+      <Button onClick={() => handleHostelAssign(hostel)}>Assign</Button>
     </Modal>
   );
 }
 
 type AssignMessModalProps = ModalProps & {
   messes: Array<Mess>;
-  handleMessAssign: () => void;
+  handleMessAssign: (mess: string) => void;
 };
 export function AssignMessModal(modalProps: AssignMessModalProps) {
   const { messes, handleMessAssign } = modalProps;
+  const [mess, setMess] = useState<string>("");
 
   return (
     <Modal {...modalProps} title="Assign Mess">
@@ -35,8 +40,10 @@ export function AssignMessModal(modalProps: AssignMessModalProps) {
           label: mess.name,
           value: mess._id,
         }))}
+        value={mess}
+        onChange={(newMess) => setMess(newMess ?? "")}
       />
-      <Button onClick={handleMessAssign}>Assign</Button>
+      <Button onClick={() => handleMessAssign(mess)}>Assign</Button>
     </Modal>
   );
 }

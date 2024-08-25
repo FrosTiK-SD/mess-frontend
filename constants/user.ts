@@ -1,29 +1,35 @@
-import { User, UserFilter } from "@/types/user";
+import { AppUser, UserFilter } from "@/types/user";
 import { GetName } from "@/utils/student";
 import { MRT_ColumnDef } from "mantine-react-table";
+import { Course } from "./courses";
+import { Department } from "./departments";
+import { Role } from "./permissions";
 
 export const defaultFilter: UserFilter = {
-  _id: [],
-  allocatedHostel: [],
-  allocatedMess: [],
-  allocatedRoom: [],
   course: [],
   department: [],
-  email: [],
   endYear: [],
-  firstName: [],
-  groups: [],
-  lastName: [],
-  managingHostels: [],
-  managingMesses: [],
-  middleName: [],
-  mobile: [],
-  permissions: [],
   rollNo: [],
   startYear: [],
 };
 
-export const studentTableColumns: Array<MRT_ColumnDef<User>> = [
+export const defaultUser: AppUser = {
+  _id: "",
+  role: Role.USER,
+
+  email: "",
+  mobile: "",
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  course: Course.NONE,
+  department: Department.NONE,
+  endYear: 0,
+  rollNo: 0,
+  startYear: 0,
+};
+
+export const studentTableColumns: Array<MRT_ColumnDef<AppUser>> = [
   {
     accessorKey: "rollNo",
     header: "Roll No",
@@ -35,10 +41,12 @@ export const studentTableColumns: Array<MRT_ColumnDef<User>> = [
   },
   {
     accessorKey: "department",
+    id: "department",
     header: "Department",
   },
   {
     accessorKey: "course",
+    id: "course",
     header: "Course",
   },
   {
@@ -46,19 +54,6 @@ export const studentTableColumns: Array<MRT_ColumnDef<User>> = [
     id: "batch",
     header: "Batch",
   },
-  {
-    accessorFn: (user) => user.allocatedHostel || "N/A",
-    id: "allocatedHostel",
-    header: "Hostel",
-  },
-  {
-    accessorFn: (user) => user.allocatedMess || "N/A",
-    id: "allocatedMess",
-    header: "Mess",
-  },
-  {
-    accessorFn: (user) => user.allocatedRoom || "N/A",
-    id: "allocatedRoom",
-    header: "Room",
-  },
 ];
+
+export const iitbhuEmailRegex = /@.itbhu.ac.in$/;

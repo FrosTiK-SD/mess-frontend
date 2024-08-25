@@ -1,7 +1,7 @@
 import { Course } from "@/constants/courses";
 import { Department } from "@/constants/departments";
-import { DeepReadonly } from "@/types/util";
 import { UserFilter } from "@/types/user";
+import { DeepReadonly } from "@/types/util";
 import { DateToYear, YearToDate } from "@/utils/student";
 import { Chip, TagsInput } from "@mantine/core";
 import { YearPickerInput } from "@mantine/dates";
@@ -90,6 +90,13 @@ export function StudentFilter({ filter, setFilter }: StudentFilterProps) {
           label="Roll Nos"
           placeholder="Press Enter to add a Roll No"
           className="mt-4"
+          value={filter.rollNo.map((rollNo) => rollNo.toString())}
+          onChange={(rollNoArray) =>
+            setFilter({
+              ...filter,
+              rollNo: rollNoArray.map((rollNoString) => parseInt(rollNoString)),
+            })
+          }
         />
       </div>
     </div>

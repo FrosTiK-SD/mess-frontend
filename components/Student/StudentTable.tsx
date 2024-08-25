@@ -1,15 +1,20 @@
 "use client";
 
 import { studentTableColumns } from "@/constants/user";
-import { User } from "@/types/user";
+import { useGetHostelsQuery } from "@/hooks/hostel";
+import { useBatchCreateHostelAllotmentsMutation } from "@/hooks/hostelAllotment";
+import { useGetChosenSemester } from "@/hooks/semesters";
+import { AppUser } from "@/types/user";
+import { SelectedIdsFromSelectionState } from "@/utils/utils";
 import { Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import axios from "axios";
 import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
 import { Dispatch, SetStateAction } from "react";
 import { AssignHostelModal, AssignMessModal } from "./AssignModals";
 
 export interface StudentTableProps {
-  students: Array<User>;
+  students: Array<AppUser>;
   selectionState: Record<string, boolean>;
   setSelectionState: Dispatch<SetStateAction<Record<string, boolean>>>;
 }
@@ -25,7 +30,11 @@ export function StudentTable({
   const [messModalOpened, { open: openMessModal, close: closeMessModal }] =
     useDisclosure(false);
 
-  const table = useMantineReactTable<User>({
+  const hostelsQuery = useGetHostelsQuery();
+  const batchCreateHostelAllotments = useBatchCreateHostelAllotmentsMutation();
+  const chosenSemester = useGetChosenSemester();
+
+  const table = useMantineReactTable<AppUser>({
     columns: studentTableColumns,
     data: students,
     enableRowSelection: true,
@@ -56,14 +65,40 @@ export function StudentTable({
       <AssignHostelModal
         opened={hostelModalOpened}
         onClose={closeHostalModal}
-        hostels={[]}
-        handleHostelAssign={() => {}}
+        hostels={hostelsQuery.data ?? []}
+        handleHostelAssign={(hostel) => {
+          batchCreateHostelAllotments.mutate({
+            hostel: hostel,
+            semester: chosenSemester ?? "",
+            users: SelectedIdsFromSelectionState(selectionState),
+          });
+        }}
       />
       <AssignMessModal
         opened={messModalOpened}
         onClose={closeMessModal}
-        messes={[]}
-        handleMessAssign={() => {}}
+        messes={[
+          {
+            _id: "66a356b78dfad0dc369865e9",
+            hostel: "000000000000000000000000",
+            name: "Sample Mess",
+          },
+        ]}
+        handleMessAssign={(mess) => {
+          axios
+            .put(
+              `${process.env.NEXT_PUBLIC_AUTH_BACKEND}/admin/user/assignMess`,
+              {
+                mess,
+                users: Object.entries(selectionState)
+                  .filter(([_, selected]) => selected)
+                  .map(([student, _]) => student),
+              },
+            )
+            .then(() => {
+              alert("Mess assigned");
+            });
+        }}
       />
       <MantineReactTable table={table} />
     </div>

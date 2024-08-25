@@ -1,59 +1,36 @@
 import { Course } from "@/constants/courses";
 import { Department } from "@/constants/departments";
-import { Permission } from "@/constants/permissions";
-import { Filter, PopulatedWith, RedefineKeyTypes } from "./util";
-import { HostelPopulated } from "./hostel";
-import { Mess } from "./mess";
-import { Room } from "./room";
-import { UserGroup } from "./userGroup";
+import { Role } from "@/constants/permissions";
 
-export interface User {
+export interface AppUser {
   // IAM
   _id: string;
-  permissions: Array<Permission>;
-  groups: Array<string>;
+  role: Role;
+
   firstName: string;
   middleName: string;
   lastName: string;
 
-  //Allocation Details for students
-  allocatedHostel: string;
-  allocatedMess: string;
-  allocatedRoom: string;
-
-  //Academic Details
-  startYear: number;
-  endYear: number;
-  rollNo: string;
-  department: Department;
-  course: Course;
-
-  //Managing Details
-  managingHostels: Array<string>;
-  managingMesses: Array<string>;
-
   //Contact Details
   email: string;
   mobile: string;
+
+  startYear?: number;
+  endYear?: number;
+  rollNo?: number;
+  department?: Department;
+  course?: Course;
 }
 
-// export interface UserPopulated extends RedefineKeyTypes<User,"groups"| "allocatedHostel" | "allocatedMess"|"allocatedRoom" | "managingHostels"|"managingMesses">{
-//    groups :
-// }
-export type UserPopulated = RedefineKeyTypes<
-  User,
-  {
-    groups: Array<UserGroup>;
+export interface UserFilter {
+  startYear: Array<number>;
+  endYear: Array<number>;
+  department: Array<Department>;
+  course: Array<Course>;
+  rollNo: Array<number>;
+}
 
-    allocatedHostel: Pick<HostelPopulated, "_id" | "name" | "caretakers">;
-    allocatedRoom: Room;
-    allocatedMess: Pick<Mess, "_id" | "hostel" | "name">;
-  }
+export type UserMini = Pick<
+  AppUser,
+  "_id" | "firstName" | "middleName" | "lastName" | "email" | "mobile"
 >;
-export type UserPopulatedWith<PopulatedKeys extends keyof User> = PopulatedWith<
-  User,
-  UserPopulated,
-  PopulatedKeys
->;
-
-export type UserFilter = Filter<User>;
