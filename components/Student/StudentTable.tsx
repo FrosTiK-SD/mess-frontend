@@ -80,10 +80,8 @@ export function StudentTable({
         messes={[
           {
             _id: "66a356b78dfad0dc369865e9",
-            caretakers: [],
             hostel: "000000000000000000000000",
             name: "Sample Mess",
-            users: [],
           },
         ]}
         handleMessAssign={(mess) => {

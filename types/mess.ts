@@ -2,8 +2,6 @@ export interface Mess {
   _id: string;
   name: string;
   hostel: string;
-  users: Array<string>;
-  caretakers: Array<string>;
 }
 
 // TODO Fix MessPopulated
